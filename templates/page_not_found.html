@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Không tìm thấy trang{% endblock %}
+{% block content %}
+<div class="alert alert-warning">
+  <h1 class="h5">404 – Không tìm thấy trang</h1>
+  <p class="mb-0"><a href="{{ url_for('trang_chu') }}">Về trang chủ</a></p>
+</div>
+{% endblock %}

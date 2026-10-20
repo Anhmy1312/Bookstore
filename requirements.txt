@@ -1,0 +1,6 @@
+Flask>=3.0
+Flask-SQLAlchemy>=3.1
+Flask-Login>=0.6.3
+PyMySQL>=1.1
+cryptography>=42.0   # PyMySQL cần gói này để đăng nhập MySQL 8 (caching_sha2_password)
+python-dotenv>=1.0

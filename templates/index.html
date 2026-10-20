@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Danh sách sách{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Danh sách sách ({{ sach|length }} đầu sách)</h1>
+<div class="table-responsive">
+  <table class="table table-striped table-sm align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>STT</th><th>Mã vạch</th><th>Tên sách</th><th>Thể loại</th>
+        <th>Tác giả</th><th class="text-end">Đơn giá</th><th class="text-end">Tồn kho</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in sach %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ s.ma_vach }}</td>
+        <td>{{ s.ten }}</td>
+        <td>{{ s.the_loai.ten }}</td>
+        <td>{{ s.tac_gia }}</td>
+        <td class="text-end">{{ s.don_gia|vnd }}</td>
+        <td class="text-end">{{ s.so_luong_ton }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

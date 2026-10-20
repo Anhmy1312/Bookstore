@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Kiểm tra CSDL{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Kiểm tra kết nối CSDL</h1>
+<p class="text-success">✔ Kết nối MySQL thành công. Số dòng mỗi bảng ngay sau khi chạy <code>schema.sql</code>
+  phải là: nguoi_dung 5, quy_dinh 3, the_loai 5, sach 20, các bảng còn lại 0.</p>
+<table class="table table-sm w-auto">
+  <thead class="table-light">
+    <tr>
+      <th>Bảng</th>
+      <th class="text-end">Số dòng</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for bang, n in thong_ke %}
+    <tr>
+      <td>{{ bang }}</td>
+      <td class="text-end">{{ n }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
