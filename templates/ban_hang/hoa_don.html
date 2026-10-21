@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Hoá đơn #{{ don.id }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h1 class="h4 mb-1 text-center">HOÁ ĐƠN BÁN SÁCH</h1>
+    <p class="text-center text-muted">Số: #{{ don.id }} – Ngày lập: {{ don.ngay_tao.strftime('%d/%m/%Y %H:%M') }}</p>
+
+    <table class="table table-sm table-bordered">
+      <tbody>
+        <tr>
+          <th style="width: 160px;">Họ tên khách hàng</th>
+          <td>{{ don.ten_khach }}</td>
+        </tr>
+        <tr>
+          <th>Ngày lập hoá đơn</th>
+          <td>{{ don.ngay_tao.strftime('%d/%m/%Y %H:%M') }}</td>
+        </tr>
+        <tr>
+          <th>Loại hoá đơn</th>
+          <td>{{ 'Tại quầy' if don.kenh == 'QUAY' else 'Đặt online' }}</td>
+        </tr>
+        <tr>
+          <th>Trạng thái</th>
+          <td>{{ don.trang_thai }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="table table-sm table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>STT</th>
+          <th>Sách</th>
+          <th>Thể loại</th>
+          <th class="text-end">Số lượng</th>
+          <th class="text-end">Đơn giá</th>
+          <th class="text-end">Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ct in don.chi_tiet %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ ct.sach.ten if ct.sach else '(Sách đã xoá)' }}</td>
+          <td>{{ ct.sach.the_loai.ten if ct.sach else '-' }}</td>
+          <td class="text-end">{{ ct.so_luong }}</td>
+          <td class="text-end">{{ ct.don_gia | vnd }}</td>
+          <td class="text-end">{{ (ct.don_gia * ct.so_luong) | vnd }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="5" class="text-end"><strong>TỔNG CỘNG</strong></td>
+          <td class="text-end"><strong>{{ don.tinh_tong_tien() | vnd }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="text-center mt-4"><strong>Người mua</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <strong>Nhân viên thanh toán: {{ don.nhan_vien.ho_ten if don.nhan_vien else '(khách tự trả online)' }}</strong>
+    </p>
+
+    <a class="btn btn-outline-secondary" href="{{ url_for('ban_hang.ban_tai_quay') }}">← Về màn bán hàng</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Danh sách sách{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Danh sách sách</h1>
+
+<form method="get" class="row g-2 mb-3">
+  <div class="col-md-4">
+    <input class="form-control" type="text" name="q" placeholder="Tên sách hoặc tác giả" value="{{ tu_khoa }}">
+  </div>
+  <div class="col-md-3">
+    <select class="form-select" name="the_loai_id">
+      <option value="">-- Tất cả thể loại --</option>
+      {% for the_loai in the_loai_list %}
+      <option value="{{ the_loai.id }}" {% if the_loai_id == the_loai.id|string %}selected{% endif %}>
+        {{ the_loai.ten }}
+      </option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
+  </div>
+</form>
+
+<table class="table table-sm table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Tên sách</th>
+      <th>Thể loại</th>
+      <th>Tác giả</th>
+      <th class="text-end">Đơn giá</th>
+      <th class="text-end">Còn lại</th>
+      <th class="text-end">Đặt</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sach in sach_list %}
+    <tr>
+      <td>{{ sach.ten }}</td>
+      <td>{{ sach.the_loai.ten }}</td>
+      <td>{{ sach.tac_gia }}</td>
+      <td class="text-end">{{ sach.don_gia | vnd }}</td>
+      <td class="text-end">
+        {% if gio_hang.get(sach.id|string) %}
+        <span class="badge bg-info">Trong giỏ: {{ gio_hang[sach.id|string] }}</span>
+        {% else %}
+        {{ sach.so_luong_ton }}
+        {% endif %}
+      </td>
+      <td class="text-end">
+        <form method="post" action="{{ url_for('dat_sach.them_vao_gio') }}" class="d-flex justify-content-end gap-1">
+          <input type="hidden" name="sach_id" value="{{ sach.id }}">
+          <input class="form-control form-control-sm" type="number" name="so_luong" value="1" min="1"
+            style="width: 70px;">
+          <button class="btn btn-sm btn-primary" type="submit">Thêm</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="6" class="text-center text-muted">Không có sách nào còn hàng.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Đơn hàng của tôi{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Đơn hàng của tôi</h1>
+
+<table class="table table-sm table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Mã đơn</th>
+      <th>Ngày đặt</th>
+      <th>Hình thức thanh toán</th>
+      <th class="text-end">Tổng tiền</th>
+      <th>Trạng thái</th>
+      <th>Hạn lấy sách</th>
+      <th>Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for don in don_hangs %}
+    <tr>
+      <td>#{{ don.id }}</td>
+      <td>{{ don.ngay_tao.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td>{{ 'Trả tại nhà sách' if don.hinh_thuc_tt == 'TRUC_TIEP' else 'Thanh toán online' }}</td>
+      <td class="text-end">{{ don.tinh_tong_tien() | vnd }}</td>
+      <td>
+        {% if don.trang_thai == 'CHO_LAY' %}
+        <span class="badge bg-warning text-dark">Chờ lấy sách</span>
+        {% elif don.trang_thai == 'HOAN_TAT' %}
+        <span class="badge bg-success">Hoàn tất</span>
+        {% else %}
+        <span class="badge bg-secondary">Đã huỷ</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if don.han_lay_sach %}
+        {{ don.han_lay_sach.strftime('%d/%m/%Y %H:%M') }}
+        {% else %}
+        -
+        {% endif %}
+      </td>
+      <td>
+        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('dat_sach.chi_tiet_don_hang', don_hang_id=don.id) }}">Xem</a>
+        {% if don.trang_thai == 'CHO_LAY' %}
+        <form class="d-inline" method="post"
+          action="{{ url_for('dat_sach.huy_don', don_hang_id=don.id) }}"
+          onsubmit="return confirm('Huỷ đơn #{{ don.id }}?');">
+          <button class="btn btn-sm btn-outline-danger" type="submit">Huỷ</button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="7" class="text-center text-muted">Bạn chưa có đơn hàng nào.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a class="btn btn-primary" href="{{ url_for('dat_sach.danh_sach_sach') }}">Tiếp tục đặt sách</a>
+{% endblock %}

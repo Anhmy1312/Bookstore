@@ -3,23 +3,32 @@
 Tuần 2 làm:
   - /kho/sach          : danh sách, thêm, sửa, xoá, tìm kiếm sách
   - /kho/phieu-nhap    : lập phiếu nhập; đọc quy_dinh (nhap_toi_thieu, nguong_ton_de_nhap)
-                         rồi kiểm tra từng dòng; hợp lệ mới lưu + cộng so_luong_ton
+                        rồi kiểm tra từng dòng; hợp lệ mới lưu + cộng so_luong_ton
 Cùng cả theo slide: from models import ...; Model.query.filter(...); db.session.add/commit;
 @login_required; render_template + base.html (extends/block).
 Bảng dùng: sach, the_loai, phieu_nhap, chi_tiet_phieu_nhap, quy_dinh
 
 LUẬT NGHIỆP VỤ (kiểm tra trong code, KHÔNG viết cứng số 150/300):
-  - Mỗi dòng phiếu nhập phải có so_luong >= quy_dinh.nhap_toi_thieu
-  - Chỉ được nhập đầu sách có so_luong_ton < quy_dinh.nguong_ton_de_nhap
+- Mỗi dòng phiếu nhập phải có so_luong >= quy_dinh.nhap_toi_thieu
+- Chỉ được nhập đầu sách có so_luong_ton < quy_dinh.nguong_ton_de_nhap
 """
+
 from datetime import date
 
-from flask import Blueprint, current_app, flash, redirect, render_template, request, url_for
+from flask import (
+    Blueprint,
+    current_app,
+    flash,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
 from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
 from extensions import db
-from models import (ChiTietDonHang, ChiTietPhieuNhap, PhieuNhap, QuyDinh, Sach, TheLoai)
+from models import ChiTietDonHang, ChiTietPhieuNhap, PhieuNhap, QuyDinh, Sach, TheLoai
 from quyen import vai_tro_required
 
 bp = Blueprint("kho", __name__, url_prefix="/kho")
@@ -69,7 +78,9 @@ def them_sach():
         don_gia = request.form.get("don_gia", "").strip()
         so_luong_ton = request.form.get("so_luong_ton", "0").strip()
 
-        loi = kiem_tra_thong_tin_sach(ten, ma_vach, tac_gia, the_loai_id, don_gia, so_luong_ton)
+        loi = kiem_tra_thong_tin_sach(
+            ten, ma_vach, tac_gia, the_loai_id, don_gia, so_luong_ton
+        )
         if loi:
             flash(loi, "danger")
         else:
@@ -113,7 +124,9 @@ def sua_sach(sach_id):
         the_loai_id = request.form.get("the_loai_id", "").strip()
         don_gia = request.form.get("don_gia", "").strip()
 
-        loi = kiem_tra_thong_tin_sach(ten, ma_vach, tac_gia, the_loai_id, don_gia, "0", sach)
+        loi = kiem_tra_thong_tin_sach(
+            ten, ma_vach, tac_gia, the_loai_id, don_gia, "0", sach
+        )
         if loi:
             flash(loi, "danger")
         else:
@@ -166,7 +179,9 @@ def xoa_sach(sach_id):
     return redirect(url_for("kho.danh_sach_sach"))
 
 
-def kiem_tra_thong_tin_sach(ten, ma_vach, tac_gia, the_loai_id, don_gia, so_luong_ton, sach=None):
+def kiem_tra_thong_tin_sach(
+    ten, ma_vach, tac_gia, the_loai_id, don_gia, so_luong_ton, sach=None
+):
     """Kiểm tra dữ liệu form sách. Trả về chuỗi lỗi, rỗng nghĩa là hợp lệ."""
     if not ten or not ma_vach or not tac_gia:
         return "Phải nhập đầy đủ tên sách, mã vạch và tác giả."
@@ -202,7 +217,9 @@ def phieu_nhap():
     loi = None
 
     if request.method == "POST":
-        ngay_nhap = request.form.get("ngay_nhap", "").strip() or date.today().isoformat()
+        ngay_nhap = (
+            request.form.get("ngay_nhap", "").strip() or date.today().isoformat()
+        )
         try:
             ngay_nhap = date.fromisoformat(ngay_nhap)
         except ValueError:

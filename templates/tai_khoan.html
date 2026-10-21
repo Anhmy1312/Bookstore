@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Tài khoản của tôi{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <h1 class="h4 mb-3">Tài khoản của tôi</h1>
+
+    {% if loi %}
+    <div class="alert alert-danger">{{ loi }}</div>
+    {% endif %}
+    {% if thanh_cong %}
+    <div class="alert alert-success">{{ thanh_cong }}</div>
+    {% endif %}
+
+    <table class="table table-sm w-auto mb-4">
+      <tbody>
+        <tr>
+          <th>Tên đăng nhập</th>
+          <td>{{ current_user.ten_dang_nhap }}</td>
+        </tr>
+        <tr>
+          <th>Họ tên</th>
+          <td>{{ current_user.ho_ten }}</td>
+        </tr>
+        <tr>
+          <th>Vai trò</th>
+          <td>{{ vai_tro_hien_tai }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 class="h5">Đổi mật khẩu</h2>
+    <form method="post" class="card card-body">
+      <div class="mb-3">
+        <label class="form-label" for="mat_khau_cu">Mật khẩu cũ</label>
+        <input class="form-control" type="password" id="mat_khau_cu" name="mat_khau_cu" required>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="mat_khau_moi">Mật khẩu mới</label>
+          <input class="form-control" type="password" id="mat_khau_moi" name="mat_khau_moi" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="xac_nhan_mat_khau">Xác nhận mật khẩu mới</label>
+          <input class="form-control" type="password" id="xac_nhan_mat_khau" name="xac_nhan_mat_khau"
+            required>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Đổi mật khẩu</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

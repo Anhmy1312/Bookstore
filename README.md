@@ -33,7 +33,9 @@ File `.env` mỗi máy một khác, **không đưa lên GitHub** (đã có trong
 **5. Tự kiểm tra** – mở http://127.0.0.1:5000/kiem-tra-db. Kết quả đúng:
 `nguoi_dung 5 · quy_dinh 3 · the_loai 5 · sach 20 · các bảng còn lại 0`. Trang chủ hiện bảng 20 đầu sách.
 
-## Các chức năng đã có (tuần 2 – phần A: kho + quản trị)
+## Các chức năng đã có
+
+### Phần A – kho + quản trị (tuần 2)
 
 | Trang | Đường dẫn | Vai trò | Nội dung |
 | --- | --- | --- | --- |
@@ -42,18 +44,36 @@ File `.env` mỗi máy một khác, **không đưa lên GitHub** (đã có trong
 | Phiếu nhập sách | `/kho/phieu-nhap` | QUANLY | Lập phiếu nhập nhiều dòng, kiểm tra luật `nhap_toi_thieu` và `nguong_ton_de_nhap` (đọc từ bảng `quy_dinh`), cộng dồn tồn kho |
 | Quy định hệ thống | `/admin/quy-dinh` | QUANTRI | Sửa `nhap_toi_thieu`, `nguong_ton_de_nhap`, `gio_huy_don` – sửa xong áp dụng ngay vì code đọc từ bảng `quy_dinh` |
 
-Phân quyền nằm ở `quyen.py` (decorator `vai_tro_required`). Chưa đăng nhập sẽ bị đưa về
-trang đăng nhập, đúng vai trò mới vào được chức năng tương ứng.
+### Phần B – khách hàng + nhân viên bán hàng
 
-## Chạy bộ kiểm thử tự động (tuần 2)
+| Trang | Đường dẫn | Vai trò | Nội dung |
+| --- | --- | --- | --- |
+| Đăng ký tài khoản | `/dang-ky` | Khách | Khách tự tạo tài khoản (`vai_tro='KHACH'`) |
+| Tài khoản | `/tai-khoan` | Tất cả | Xem thông tin + đổi mật khẩu |
+| Sách trong nhà sách | `/dat-sach/` | KHACH | Danh sách sách còn hàng, tìm kiếm, lọc thể loại, thêm vào giỏ |
+| Giỏ hàng | `/dat-sach/gio-hang` | KHACH | Sửa số lượng, xoá, tổng tiền |
+| Đặt sách | `/dat-sach/dat-hang` | KHACH | 2 hình thức thanh toán: trực tiếp tại nhà sách (hạn 48 giờ) hoặc thanh toán online (giao miễn phí) |
+| Đơn của tôi | `/dat-sach/don-hang` | KHACH | Xem trạng thái, hạn lấy sách, huỷ đơn khi còn ở trạng thái chờ lấy |
+| Bán tại quầy | `/ban-hang/` | NHANVIEN | Quét mã vạch / chọn sách, giỏ quầy, thanh toán và lập hoá đơn |
+| Đơn chờ lấy sách | `/ban-hang/don-cho-lay` | NHANVIEN | Xác nhận khách lấy sách và thu tiền (UC04) |
+| Hoá đơn | `/ban-hang/hoa-don/<id>` | NHANVIEN | Xem/in hoá đơn |
+
+Phân quyền nằm ở `quyen.py` (decorator `vai_tro_required`), hàm nghiệp vụ dùng chung nằm ở
+`nghiem_vu.py` (tạo đơn hàng, tự huỷ đơn quá hạn). Chưa đăng nhập sẽ bị đưa về trang đăng
+nhập, đúng vai trò mới vào được chức năng tương ứng. Menu nằm trong `templates/_menu.html`
+(file riêng để hai bạn cùng sửa mà không xung đột git).
+
+## Chạy bộ kiểm thử tự động
 
 ```bash
-venv\Scripts\python.exe kiem_thu_tuan2.py
+venv\Scripts\python.exe kiem_thu_tuan2.py          # phần A: kho + quản trị
+venv\Scripts\python.exe kiem_thu_khach_ban_hang.py  # phần B: khách + bán hàng
 ```
-Script kiểm tra trên MySQL thật: đăng nhập 4 vai trò, chặn sai vai trò, thêm/sửa/xoá sách,
-lập phiếu nhập hợp lệ / bị từ chối (100 cuốn, sách tồn ≥ 300), đổi quy định 150 → 100 xem
-luật có áp dụng ngay không. Kết quả ghi ra `_ket_qua_kiem_thu.txt` và **tự phục hồi dữ liệu mẫu
-về đúng trạng thái ban đầu** (5/3/5/20/0/0/0/0).
+Hai script kiểm tra trên MySQL thật (đăng nhập 4 vai trò, chặn sai vai trò, thêm/sửa/xoá sách,
+lập phiếu nhập hợp lệ / bị từ chối, đổi quy định 150 → 100, đặt sách 2 hình thức thanh toán,
+hạn 48 giờ, tự huỷ đơn quá hạn, bán tại quầy bằng mã vạch, xác nhận lấy sách). Kết quả ghi ra
+`_ket_qua_kiem_thu*.txt` và script **tự phục hồi dữ liệu mẫu** về đúng trạng thái ban đầu
+(5/3/5/20/0/0/0/0).
 
 ## Tài khoản mẫu (mật khẩu chung: `123456`)
 

@@ -37,6 +37,43 @@ Nguồn kế hoạch: `tasks/plan.md`. Chi tiết: `PROJECT_CONTEXT.md` (mục 3
 - Xoá sách trong script kiểm thử làm mất dữ liệu mẫu → chụp lại bảng `sach` trước khi thử và phục hồi sau (xem `kiem_thu_tuan2.py`).
 
 ## Việc còn lại của tuần 2 (nếu còn thời gian)
-- [ ] Vẽ ảnh mockup bằng Mockflow cho 4 màn hình của A (đề yêu cầu, không chụp màn hình web)
-- [ ] Chờ B xong `auth.py`/`dat_sach.py`/`ban_hang.py` rồi ghép: menu cần thêm mục "Đặt sách", "Bán tại quầy", "Đơn của tôi" theo vai trò KHACH/NHANVIEN
+- [ ] Vẽ ảnh mockup bằng Mockflow cho 4 màn hình của A và 9 màn hình của B (đề yêu cầu, không chụp màn hình web)
 - [ ] Tuần 3: 2 báo cáo + Chart.js (`/admin/bao-cao`), theo sơ đồ UC07 đã vẽ
+- [ ] B rà lại `auth.py` (hiện là bản nền tối giản) nếu B muốn thêm chức năng đăng ký của nhân viên/quản lý
+
+---
+
+# PHẦN B – khách hàng + nhân viên bán hàng (đã code xong 21/10/2026)
+
+## Phase B0 – Nền dùng chung
+- [x] B0. `bookstore/nghiem_vu.py` (MỚI): `tao_don_hang()` (tạo đơn + chi tiết + trừ tồn), `huy_don_qua_han()` (tự huỷ đơn `CHO_LAY` quá hạn + trả lại tồn), các hàm giỏ hàng session (`KHOA_GIO_HANG`, `KHOA_GIO_QUAY`)
+- [x] B1. `blueprints/auth.py` mở rộng: `/dang-ky` (khách tự đăng ký, vai trò KHACH, băm `pbkdf2:sha256`), `/tai-khoan` (xem thông tin + đổi mật khẩu)
+- [x] B2. `templates/_menu.html` (MỚI) – tách menu khỏi `base.html` để hai bạn cùng sửa không conflict; thêm mục cho KHACH và NHANVIEN
+- [x] ✅ Checkpoint B0: 20/20 trang theo 5 vai trò trả về 200, không có trang lỗi 500
+
+## Phase B1 – `dat_sach.py` (khách đặt sách, YC2)
+- [x] B3. `/dat-sach/` danh sách sách (tìm/lọc, chỉ sách còn hàng), `/dat-sach/gio-hang/them`
+- [x] B4. `/dat-sach/gio-hang` (xem, `/cap-nhat`, `/xoa`), `/dat-sach/dat-hang` (2 hình thức thanh toán)
+- [x] B5. `/dat-sach/don-hang` (đơn của tôi, tự huỷ quá hạn), `/dat-sach/don-hang/<id>`, `/dat-sach/don-hang/<id>/huy`
+- [x] ✅ Checkpoint B1: đặt `TRUC_TIEP` → `CHO_LAY` + hạn 48h, tồn bị trừ; đặt `ONLINE` → `HOAN_TAT`, `han_lay_sach=NULL`; thêm vượt tồn bị từ chối; khách khác không xem đơn người khác
+
+## Phase B2 – `ban_hang.py` (bán tại quầy, YC3 + UC04)
+- [x] B6. `/ban-hang/` – quét mã vạch / chọn sách, giỏ quầy (session riêng), thanh toán lập hoá đơn `kenh=QUAY`, `khach_id=NULL`, `nhan_vien_id` có, `don_gia` chốt lúc bán
+- [x] B7. `/ban-hang/hoa-don/<id>` (in hoá đơn), `/ban-hang/don-cho-lay` + `/don-cho-lay/<id>/xac-nhan` (UC04: CHO_LAY → HOAN_TAT)
+- [x] ✅ Checkpoint B2: quét mã vạch tạo đúng hoá đơn; xác nhận lấy sách chuyển `HOAN_TAT`; đơn quá hạn tự huỷ và **tồn kho được cộng lại**
+
+## Phase B3 – Hồ sơ báo cáo của B
+- [x] B8. Sequence + activity UC02 (đặt sách), UC03 (bán tại quầy), UC04 (xác nhận lấy sách) → `docs/nguon_ve/`
+- [x] B9. `docs/thiet_ke_xu_ly_B.md` – bảng 3 cột cho 9 màn hình của B + gợi ý mockup
+- [x] ✅ Checkpoint B3: khớp code đã chạy, tên bảng/cột trùng `schema.sql`
+
+## Kiểm thử
+- [x] `kiem_thu_khach_ban_hang.py` – 11 nhóm kiểm thử, tự phục hồi dữ liệu mẫu
+- [x] Chạy lại `kiem_thu_tuan2.py` (phần A) → vẫn PASS sau khi tách menu và đổi `auth.py`
+- [x] Dữ liệu mẫu sau kiểm thử: 5/3/5/20/0/0/0/0, tồn kho đúng như ban đầu
+
+## Lỗi đã gặp ở phần B (đừng làm lại)
+1. Bảng `nguoi_dung` **không có cột `email`** (chỉ có `id, ten_dang_nhap, mat_khau_hash, ho_ten, vai_tro`) → không thêm trường email vào form đăng ký, và đừng sửa `schema.sql`/`models.py` một cách tùy tiện.
+2. Gõ nhầm `hanh_lay_sach` thay vì `han_lay_sach` → `AttributeError`.
+3. Route bán tại quầy phải khai báo `methods=["GET", "POST"]` nếu form gửi POST.
+4. Script kiểm thử phải **chụp ảnh dữ liệu trước** và **bỏ qua phục hồi nếu ảnh chụp rỗng** — nếu không sẽ xoá nhầm dữ liệu mẫu (đã xảy ra 1 lần, khôi phục bằng cách chạy lại `schema.sql`).

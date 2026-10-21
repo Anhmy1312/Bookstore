@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Đặt sách{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Đặt sách</h1>
+
+{% if chi_tiet %}
+<table class="table table-sm table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Sách</th>
+      <th class="text-end">Số lượng</th>
+      <th class="text-end">Đơn giá</th>
+      <th class="text-end">Thành tiền</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sach, so_luong in chi_tiet %}
+    <tr>
+      <td>{{ sach.ten }}</td>
+      <td class="text-end">{{ so_luong }}</td>
+      <td class="text-end">{{ sach.don_gia | vnd }}</td>
+      <td class="text-end">{{ (sach.don_gia * so_luong) | vnd }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3" class="text-end"><strong>TỔNG CỘNG</strong></td>
+      <td class="text-end"><strong>{{ tong_tien | vnd }}</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<form method="post" class="card card-body" style="max-width: 720px;">
+  <div class="mb-3">
+    <label class="form-label">Chọn hình thức thanh toán</label>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="hinh_thuc_tt" id="tt_truc_tiep" value="TRUC_TIEP"
+        checked>
+      <label class="form-check-label" for="tt_truc_tiep">
+        <strong>Thanh toán trực tiếp tại nhà sách</strong> – đơn được giữ trong
+        {{ 48 }} giờ; quá hạn mà khách không đến lấy sách thì đơn bị huỷ tự động.
+      </label>
+    </div>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="hinh_thuc_tt" id="tt_online" value="ONLINE">
+      <label class="form-check-label" for="tt_online">
+        <strong>Thanh toán online</strong> – đơn hoàn tất ngay, hệ thống giao hàng miễn phí.
+      </label>
+    </div>
+  </div>
+  <button class="btn btn-success" type="submit">Xác nhận đặt sách</button>
+  <a class="btn btn-outline-secondary" href="{{ url_for('dat_sach.gio_hang') }}">Quay lại giỏ hàng</a>
+</form>
+{% else %}
+<p class="text-muted">Giỏ hàng đang trống. <a href="{{ url_for('dat_sach.danh_sach_sach') }}">Xem danh sách sách</a></p>
+{% endif %}
+{% endblock %}

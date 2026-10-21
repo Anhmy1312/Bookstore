@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Giỏ hàng{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Giỏ hàng của tôi</h1>
+
+{% if chi_tiet %}
+<table class="table table-sm table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Sách</th>
+      <th class="text-end">Đơn giá</th>
+      <th style="width: 140px;">Số lượng</th>
+      <th class="text-end">Thành tiền</th>
+      <th>Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sach, so_luong in chi_tiet %}
+    <tr>
+      <td>{{ sach.ten }}</td>
+      <td class="text-end">{{ sach.don_gia | vnd }}</td>
+      <td>
+        <form method="post" action="{{ url_for('dat_sach.cap_nhat_gio') }}" class="d-flex gap-1">
+          <input type="hidden" name="sach_id" value="{{ sach.id }}">
+          <input class="form-control form-control-sm" type="number" name="so_luong" value="{{ so_luong }}"
+            min="0" style="width: 80px;">
+          <button class="btn btn-sm btn-outline-primary" type="submit">Cập nhật</button>
+        </form>
+      </td>
+      <td class="text-end">{{ (sach.don_gia * so_luong) | vnd }}</td>
+      <td>
+        <form method="post" action="{{ url_for('dat_sach.xoa_vao_gio') }}">
+          <input type="hidden" name="sach_id" value="{{ sach.id }}">
+          <button class="btn btn-sm btn-outline-danger" type="submit">Xoá</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="3" class="text-end"><strong>TỔNG CỘNG</strong></td>
+      <td class="text-end"><strong>{{ tong_tien | vnd }}</strong></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<a class="btn btn-success" href="{{ url_for('dat_sach.dat_hang') }}">Đặt sách</a>
+<a class="btn btn-outline-secondary" href="{{ url_for('dat_sach.danh_sach_sach') }}">Tiếp tục xem sách</a>
+{% else %}
+<p class="text-muted">Giỏ hàng đang trống. <a href="{{ url_for('dat_sach.danh_sach_sach') }}">Xem danh sách sách</a></p>
+{% endif %}
+{% endblock %}

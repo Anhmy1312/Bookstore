@@ -12,20 +12,7 @@
     <div class="container">
       <a class="navbar-brand" href="{{ url_for('trang_chu') }}">📚 Nhà sách</a>
       <div class="navbar-nav">
-        <a class="nav-link" href="{{ url_for('trang_chu') }}">Danh sách sách</a>
-        {# --- Menu theo vai trò (A thêm tuần 2) --- #}
-        {% if current_user.is_authenticated %}
-          {% if current_user.vai_tro == 'QUANLY' %}
-            <a class="nav-link" href="{{ url_for('kho.danh_sach_sach') }}">Quản lý sách</a>
-            <a class="nav-link" href="{{ url_for('kho.phieu_nhap') }}">Phiếu nhập</a>
-          {% elif current_user.vai_tro == 'QUANTRI' %}
-            <a class="nav-link" href="{{ url_for('admin.quy_dinh') }}">Quy định</a>
-          {% endif %}
-          <a class="nav-link" href="{{ url_for('auth.dang_xuat') }}">Đăng xuất ({{ current_user.ho_ten }})</a>
-        {% else %}
-          <a class="nav-link" href="{{ url_for('auth.dang_nhap') }}">Đăng nhập</a>
-        {% endif %}
-        <a class="nav-link" href="{{ url_for('kiem_tra_db') }}">Kiểm tra CSDL</a>
+        {% include "_menu.html" %}
       </div>
     </div>
   </nav>

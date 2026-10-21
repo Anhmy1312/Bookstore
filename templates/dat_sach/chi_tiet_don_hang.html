@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Chi tiết đơn hàng #{{ don.id }}{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Chi tiết đơn hàng #{{ don.id }}</h1>
+
+<p>
+  <strong>Ngày đặt:</strong> {{ don.ngay_tao.strftime('%d/%m/%Y %H:%M') }} &nbsp;|&nbsp;
+  <strong>Trạng thái:</strong> {{ don.trang_thai }} &nbsp;|&nbsp;
+  <strong>Hình thức:</strong> {{ 'Trả tại nhà sách' if don.hinh_thuc_tt == 'TRUC_TIEP' else 'Thanh toán online' }}
+</p>
+
+<table class="table table-sm table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>STT</th>
+      <th>Sách</th>
+      <th>Thể loại</th>
+      <th class="text-end">Số lượng</th>
+      <th class="text-end">Đơn giá</th>
+      <th class="text-end">Thành tiền</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ct in don.chi_tiet %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td>{{ ct.sach.ten if ct.sach else '(Sách đã xoá)' }}</td>
+      <td>{{ ct.sach.the_loai.ten if ct.sach else '-' }}</td>
+      <td class="text-end">{{ ct.so_luong }}</td>
+      <td class="text-end">{{ ct.don_gia | vnd }}</td>
+      <td class="text-end">{{ (ct.don_gia * ct.so_luong) | vnd }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="5" class="text-end"><strong>TỔNG CỘNG</strong></td>
+      <td class="text-end"><strong>{{ don.tinh_tong_tien() | vnd }}</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<a class="btn btn-outline-secondary" href="{{ url_for('dat_sach.don_hang_cua_toi') }}">← Về danh sách đơn</a>
+{% endblock %}

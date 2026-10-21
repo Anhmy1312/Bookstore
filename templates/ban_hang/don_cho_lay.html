@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Đơn chờ lấy sách{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Đơn khách đang chờ lấy sách</h1>
+
+<table class="table table-sm table-bordered align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>Mã đơn</th>
+      <th>Khách hàng</th>
+      <th>Ngày đặt</th>
+      <th class="text-end">Tổng tiền</th>
+      <th>Hạn lấy sách</th>
+      <th>Số cuốn</th>
+      <th>Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for don in don_hangs %}
+    <tr>
+      <td>#{{ don.id }}</td>
+      <td>{{ don.ten_khach }}</td>
+      <td>{{ don.ngay_tao.strftime('%d/%m/%Y %H:%M') }}</td>
+      <td class="text-end">{{ don.tinh_tong_tien() | vnd }}</td>
+      <td>
+        {% if don.han_lay_sach %}
+        <span class="badge bg-warning text-dark">{{ don.han_lay_sach.strftime('%d/%m/%Y %H:%M') }}</span>
+        {% else %}
+        -
+        {% endif %}
+      </td>
+      <td class="text-end">{{ don.chi_tiet | length }}</td>
+      <td>
+        <form method="post" action="{{ url_for('ban_hang.xac_nhan_lay_sach', don_hang_id=don.id) }}"
+          onsubmit="return confirm('Xác nhận khách đã lấy sách và thanh toán?');">
+          <button class="btn btn-sm btn-success" type="submit">Xác nhận lấy sách &amp; thu tiền</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="7" class="text-center text-muted">Không có đơn nào đang chờ lấy sách.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a class="btn btn-outline-secondary" href="{{ url_for('ban_hang.ban_tai_quay') }}">← Về màn bán hàng</a>
+{% endblock %}

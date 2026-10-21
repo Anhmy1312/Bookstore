@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Bán hàng tại quầy{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Bán hàng tại quầy</h1>
+
+{% if loi %}
+<div class="alert alert-danger">{{ loi }}</div>
+{% endif %}
+
+<div class="row g-3">
+  <div class="col-md-7">
+    <h2 class="h6">Giỏ hàng tại quầy</h2>
+    <table class="table table-sm table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Sách</th>
+          <th class="text-end">Đơn giá</th>
+          <th style="width: 130px;">Số lượng</th>
+          <th class="text-end">Thành tiền</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for sach, so_luong in chi_tiet %}
+        <tr>
+          <td>{{ sach.ten }}</td>
+          <td class="text-end">{{ sach.don_gia | vnd }}</td>
+          <td>
+            <form method="post" class="d-flex gap-1">
+              <input type="hidden" name="hanh_dong" value="cap_nhat">
+              <input type="hidden" name="sach_id" value="{{ sach.id }}">
+              <input class="form-control form-control-sm" type="number" name="so_luong" value="{{ so_luong }}"
+                min="0" style="width: 70px;">
+              <button class="btn btn-sm btn-outline-primary" type="submit">Cập nhật</button>
+            </form>
+          </td>
+          <td class="text-end">{{ (sach.don_gia * so_luong) | vnd }}</td>
+          <td>
+            <form method="post">
+              <input type="hidden" name="hanh_dong" value="xoa">
+              <input type="hidden" name="sach_id" value="{{ sach.id }}">
+              <button class="btn btn-sm btn-outline-danger" type="submit">Xoá</button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="text-center text-muted">Chưa có sách nào trong giỏ.</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="3" class="text-end"><strong>TỔNG CỘNG</strong></td>
+          <td class="text-end"><strong>{{ tong_tien | vnd }}</strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    {% if chi_tiet %}
+    <form method="post" class="card card-body">
+      <input type="hidden" name="hanh_dong" value="thanh_toan">
+      <div class="mb-3">
+        <label class="form-label" for="ten_khach">Họ tên khách hàng</label>
+        <input class="form-control" type="text" id="ten_khach" name="ten_khach"
+          placeholder="Khách vãng lai (để trống nếu không có tài khoản)">
+        <div class="form-text">Khách có tài khoản thì chọn từ danh sách bên dưới.</div>
+      </div>
+      <button class="btn btn-success" type="submit">Thanh toán &amp; lập hoá đơn</button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="col-md-5">
+    <h2 class="h6">Quét mã vạch / chọn sách</h2>
+    <form method="post" class="card card-body mb-3">
+      <input type="hidden" name="hanh_dong" value="them">
+      <div class="mb-2">
+        <label class="form-label" for="ma_vach">Mã vạch (quét máy quét mã vạch)</label>
+        <input class="form-control" type="text" id="ma_vach" name="ma_vach" autofocus
+          placeholder="8936000000011">
+      </div>
+      <div class="mb-2">
+        <label class="form-label" for="sach_id">Hoặc chọn sách</label>
+        <select class="form-select" id="sach_id" name="sach_id">
+          <option value="">-- Chọn sách --</option>
+          {% for sach in sach_list %}
+          <option value="{{ sach.id }}">{{ sach.ten }} (tồn: {{ sach.so_luong_ton }})</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="so_luong">Số lượng</label>
+        <input class="form-control" type="number" id="so_luong" name="so_luong" value="1" min="1">
+      </div>
+      <button class="btn btn-primary" type="submit">Thêm vào giỏ</button>
+    </form>
+
+    <a class="btn btn-outline-secondary" href="{{ url_for('ban_hang.don_cho_lay') }}">
+      Đơn khách đang chờ lấy sách
+    </a>
+  </div>
+</div>
+{% endblock %}
