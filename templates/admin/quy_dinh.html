@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Quy định hệ thống{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Quy định của hệ thống</h1>
+
+<p class="text-muted">
+  Ba quy định dưới đây được lưu trong bảng <code>quy_dinh</code>. Mọi chức năng liên quan
+  (lập phiếu nhập, đặt hàng, huỷ đơn quá hạn) đều đọc giá trị từ đây nên sửa xong là áp dụng ngay.
+</p>
+
+<form method="post" class="card card-body" style="max-width: 640px;">
+  {% for quy_dinh in quy_dinh_list %}
+  <div class="mb-3">
+    <label class="form-label" for="{{ quy_dinh.ten }}">
+      {{ quy_dinh.ten }} <span class="text-muted">({{ quy_dinh.mo_ta }})</span>
+    </label>
+    <input class="form-control" type="number" min="0" id="{{ quy_dinh.ten }}"
+      name="{{ quy_dinh.ten }}" value="{{ quy_dinh.gia_tri }}" required>
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary" type="submit">Lưu quy định</button>
+</form>
+{% endblock %}

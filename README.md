@@ -33,6 +33,28 @@ File `.env` mỗi máy một khác, **không đưa lên GitHub** (đã có trong
 **5. Tự kiểm tra** – mở http://127.0.0.1:5000/kiem-tra-db. Kết quả đúng:
 `nguoi_dung 5 · quy_dinh 3 · the_loai 5 · sach 20 · các bảng còn lại 0`. Trang chủ hiện bảng 20 đầu sách.
 
+## Các chức năng đã có (tuần 2 – phần A: kho + quản trị)
+
+| Trang | Đường dẫn | Vai trò | Nội dung |
+| --- | --- | --- | --- |
+| Đăng nhập / đăng xuất | `/dang-nhap`, `/dang-xuat` | Tất cả | Đăng nhập bằng `ten_dang_nhap` + mật khẩu (so sánh với `mat_khau_hash`) |
+| Quản lý sách | `/kho/sach` | QUANLY | Danh sách, tìm kiếm theo tên/mã vạch/tác giả, lọc theo thể loại, thêm, sửa, xoá |
+| Phiếu nhập sách | `/kho/phieu-nhap` | QUANLY | Lập phiếu nhập nhiều dòng, kiểm tra luật `nhap_toi_thieu` và `nguong_ton_de_nhap` (đọc từ bảng `quy_dinh`), cộng dồn tồn kho |
+| Quy định hệ thống | `/admin/quy-dinh` | QUANTRI | Sửa `nhap_toi_thieu`, `nguong_ton_de_nhap`, `gio_huy_don` – sửa xong áp dụng ngay vì code đọc từ bảng `quy_dinh` |
+
+Phân quyền nằm ở `quyen.py` (decorator `vai_tro_required`). Chưa đăng nhập sẽ bị đưa về
+trang đăng nhập, đúng vai trò mới vào được chức năng tương ứng.
+
+## Chạy bộ kiểm thử tự động (tuần 2)
+
+```bash
+venv\Scripts\python.exe kiem_thu_tuan2.py
+```
+Script kiểm tra trên MySQL thật: đăng nhập 4 vai trò, chặn sai vai trò, thêm/sửa/xoá sách,
+lập phiếu nhập hợp lệ / bị từ chối (100 cuốn, sách tồn ≥ 300), đổi quy định 150 → 100 xem
+luật có áp dụng ngay không. Kết quả ghi ra `_ket_qua_kiem_thu.txt` và **tự phục hồi dữ liệu mẫu
+về đúng trạng thái ban đầu** (5/3/5/20/0/0/0/0).
+
 ## Tài khoản mẫu (mật khẩu chung: `123456`)
 
 | Tên đăng nhập | Vai trò | Dùng cho |

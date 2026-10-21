@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Đăng nhập{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <h1 class="h4 mb-3">Đăng nhập hệ thống</h1>
+
+    {% if loi %}
+    <div class="alert alert-danger">{{ loi }}</div>
+    {% endif %}
+
+    <form method="post" class="card card-body">
+      <div class="mb-3">
+        <label class="form-label" for="ten_dang_nhap">Tên đăng nhập</label>
+        <input class="form-control" type="text" id="ten_dang_nhap" name="ten_dang_nhap" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="mat_khau">Mật khẩu</label>
+        <input class="form-control" type="password" id="mat_khau" name="mat_khau" required>
+      </div>
+      <button class="btn btn-primary" type="submit">Đăng nhập</button>
+    </form>
+
+    <p class="text-muted mt-3">
+      Tài khoản mẫu (mật khẩu chung <code>123456</code>):<br>
+      <code>quantri</code> - quản trị ·
+      <code>quanly</code> - quản lý kho ·
+      <code>nhanvien</code> - nhân viên bán hàng ·
+      <code>khachhang</code> - khách hàng
+    </p>
+  </div>
+</div>
+{% endblock %}

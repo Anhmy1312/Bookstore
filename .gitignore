@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 .idea/
 .vscode/
+
+# Kết quả chạy script kiểm thử (tự sinh ra)
+_ket_qua_kiem_thu.txt

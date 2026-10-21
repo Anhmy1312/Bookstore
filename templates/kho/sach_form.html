@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{% if sach %}Sửa sách{% else %}Thêm sách{% endif %}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <h1 class="h4 mb-3">{% if sach %}Sửa thông tin sách{% else %}Thêm sách mới{% endif %}</h1>
+
+    <form method="post" class="card card-body">
+      <div class="mb-3">
+        <label class="form-label" for="ten">Tên sách</label>
+        <input class="form-control" type="text" id="ten" name="ten" required
+          value="{{ sach.ten if sach else '' }}">
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="ma_vach">Mã vạch</label>
+          <input class="form-control" type="text" id="ma_vach" name="ma_vach" required
+            value="{{ sach.ma_vach if sach else '' }}">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="tac_gia">Tác giả</label>
+          <input class="form-control" type="text" id="tac_gia" name="tac_gia" required
+            value="{{ sach.tac_gia if sach else '' }}">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" for="the_loai_id">Thể loại</label>
+          <select class="form-select" id="the_loai_id" name="the_loai_id" required>
+            {% for the_loai in the_loai_list %}
+            <option value="{{ the_loai.id }}"
+              {% if sach and sach.the_loai_id == the_loai.id %}selected{% endif %}>
+              {{ the_loai.ten }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label class="form-label" for="don_gia">Đơn giá (VNĐ)</label>
+          <input class="form-control" type="number" min="0" id="don_gia" name="don_gia" required
+            value="{{ sach.don_gia if sach else '' }}">
+        </div>
+        {% if not sach %}
+        <div class="col-md-3 mb-3">
+          <label class="form-label" for="so_luong_ton">Số lượng tồn</label>
+          <input class="form-control" type="number" min="0" id="so_luong_ton" name="so_luong_ton" value="0">
+        </div>
+        {% else %}
+        <div class="col-md-3 mb-3">
+          <label class="form-label">Tồn kho hiện tại</label>
+          <input class="form-control" type="text" value="{{ sach.so_luong_ton }}" disabled>
+          <div class="form-text">Tồn kho chỉ đổi qua phiếu nhập hoặc bán hàng.</div>
+        </div>
+        {% endif %}
+      </div>
+      <div>
+        <button class="btn btn-primary" type="submit">
+          {% if sach %}Lưu thay đổi{% else %}Thêm sách{% endif %}
+        </button>
+        <a class="btn btn-outline-secondary" href="{{ url_for('kho.danh_sach_sach') }}">Hủy</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
