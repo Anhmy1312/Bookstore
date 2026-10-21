@@ -1,0 +1,43 @@
+digraph UseCase {
+  rankdir=LR; nodesep=0.35; ranksep=1.3; compound=true;
+  fontname="DejaVu Sans"; fontsize=13; labelloc=b;
+  label="Lược đồ use case tổng – Hệ thống quản lý nhà sách\n(ô tô màu: 4 use case được đặc tả chi tiết)";
+  node [fontname="DejaVu Sans", fontsize=12];
+  edge [fontname="DejaVu Sans", fontsize=9, arrowsize=0.8];
+
+  KH [shape=none, label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD><IMG SRC="actor.png"/></TD></TR><TR><TD>Khách hàng</TD></TR></TABLE>>];
+  NV [shape=none, label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD><IMG SRC="actor.png"/></TD></TR><TR><TD>Nhân viên<BR/>bán hàng</TD></TR></TABLE>>];
+  QL [shape=none, label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD><IMG SRC="actor.png"/></TD></TR><TR><TD>Người quản lý<BR/>(quản lý kho)</TD></TR></TABLE>>];
+  QT [shape=none, label=<<TABLE BORDER="0" CELLSPACING="0"><TR><TD><IMG SRC="actor.png"/></TD></TR><TR><TD>Người quản trị</TD></TR></TABLE>>];
+
+  subgraph cluster_he_thong {
+    label="Hệ thống quản lý nhà sách"; style="rounded"; color="#555555"; fontsize=13; margin=18;
+    node [shape=ellipse, style=filled, fillcolor=white, margin="0.12,0.06"];
+
+    UC_DatSach  [label="Đặt sách online", fillcolor="#dbe9f7"];
+    UC_XacNhan  [label="Xác nhận khách lấy sách\nvà thu tiền"];
+    UC_BanSach  [label="Bán sách tại quầy", fillcolor="#dbe9f7"];
+    UC_Nhap     [label="Lập phiếu nhập sách", fillcolor="#dbe9f7"];
+    UC_QLSach   [label="Quản lý sách\n(thêm / xoá / sửa / tìm kiếm)"];
+    UC_ThongKe  [label="Xem thống kê, báo cáo", fillcolor="#dbe9f7"];
+    UC_QuyDinh  [label="Thay đổi quy định"];
+    UC_DangNhap [label="Đăng nhập"];
+  }
+
+  KH -> UC_DatSach  [arrowhead=none];
+  NV -> UC_BanSach  [arrowhead=none];
+  NV -> UC_XacNhan  [arrowhead=none];
+  QL -> UC_Nhap     [arrowhead=none];
+  QL -> UC_QLSach   [arrowhead=none];
+  QT -> UC_ThongKe  [arrowhead=none];
+  QT -> UC_QuyDinh  [arrowhead=none];
+
+  edge [style=dashed, arrowhead=vee, label="«include»"];
+  UC_DatSach -> UC_DangNhap;
+  UC_BanSach -> UC_DangNhap;
+  UC_XacNhan -> UC_DangNhap;
+  UC_Nhap    -> UC_DangNhap;
+  UC_QLSach  -> UC_DangNhap;
+  UC_ThongKe -> UC_DangNhap;
+  UC_QuyDinh -> UC_DangNhap;
+}

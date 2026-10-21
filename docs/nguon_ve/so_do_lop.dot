@@ -1,0 +1,24 @@
+digraph SoDoLop {
+  rankdir=TB; nodesep=0.7; ranksep=1.0; splines=true;
+  fontname="DejaVu Sans"; fontsize=13; labelloc=b;
+  label="Sơ đồ lớp – Hệ thống quản lý nhà sách";
+  node [shape=none, margin=0, fontname="DejaVu Sans", fontsize=11];
+  edge [fontname="DejaVu Sans", fontsize=10, arrowsize=0.9, labeldistance=2.2, labelangle=0, dir=none];
+  NguoiDung [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>NguoiDung</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ id : int<BR ALIGN="LEFT"/>+ ten_dang_nhap : string<BR ALIGN="LEFT"/>+ mat_khau_hash : string<BR ALIGN="LEFT"/>+ ho_ten : string<BR ALIGN="LEFT"/>+ vai_tro : KHACH | NHANVIEN | QUANLY | QUANTRI<BR ALIGN="LEFT"/></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ dang_nhap()<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  TheLoai [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>TheLoai</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ id : int<BR ALIGN="LEFT"/>+ ten : string<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  Sach [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>Sach</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ id : int<BR ALIGN="LEFT"/>+ ma_vach : string<BR ALIGN="LEFT"/>+ ten : string<BR ALIGN="LEFT"/>+ tac_gia : string<BR ALIGN="LEFT"/>+ don_gia : int<BR ALIGN="LEFT"/>+ so_luong_ton : int<BR ALIGN="LEFT"/></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ cap_nhat_ton(so_luong)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  PhieuNhap [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>PhieuNhap</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ id : int<BR ALIGN="LEFT"/>+ ngay_nhap : date<BR ALIGN="LEFT"/></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ kiem_tra_quy_dinh()<BR ALIGN="LEFT"/>+ tinh_tong_so_luong()<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  ChiTietPhieuNhap [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>ChiTietPhieuNhap</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ so_luong : int<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  DonHang [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>DonHang</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ id : int<BR ALIGN="LEFT"/>+ kenh : ONLINE | QUAY<BR ALIGN="LEFT"/>+ ten_khach : string<BR ALIGN="LEFT"/>+ hinh_thuc_tt : TRUC_TIEP | ONLINE<BR ALIGN="LEFT"/>+ trang_thai : CHO_LAY | HOAN_TAT | DA_HUY<BR ALIGN="LEFT"/>+ ngay_tao : datetime<BR ALIGN="LEFT"/>+ han_lay_sach : datetime [0..1]<BR ALIGN="LEFT"/></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ tinh_tong_tien()<BR ALIGN="LEFT"/>+ huy_neu_qua_han()<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  ChiTietDonHang [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#e3ecf7"><B>ChiTietDonHang</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ so_luong : int<BR ALIGN="LEFT"/>+ don_gia : int<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+  QuyDinh [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#f3ead3"><B>QuyDinh</B></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ ten : string<BR ALIGN="LEFT"/>+ gia_tri : int<BR ALIGN="LEFT"/>+ mo_ta : string<BR ALIGN="LEFT"/></TD></TR><HR/><TR><TD ALIGN="LEFT" BALIGN="LEFT">+ lay_gia_tri(ten)<BR ALIGN="LEFT"/></TD></TR></TABLE>>];
+
+  TheLoai   -> Sach             [taillabel="1", headlabel="*", label="thuộc"];
+  NguoiDung -> PhieuNhap        [taillabel="1", headlabel="*", label="lập\n(vai trò QUANLY)"];
+  PhieuNhap -> ChiTietPhieuNhap [taillabel="1", headlabel="*", label="gồm", dir=back, arrowtail=diamond];
+  Sach      -> ChiTietPhieuNhap [taillabel="1", headlabel="*", label="được nhập"];
+  NguoiDung -> DonHang          [taillabel="0..1", headlabel="*", label="đặt\n(khach_id, vai trò KHACH)"];
+  NguoiDung -> DonHang          [taillabel="0..1", headlabel="*", label="thanh toán\n(nhan_vien_id, vai trò NHANVIEN)"];
+  DonHang   -> ChiTietDonHang   [taillabel="1", headlabel="*", label="gồm", dir=back, arrowtail=diamond];
+  Sach      -> ChiTietDonHang   [taillabel="1", headlabel="*", label="được bán"];
+}
