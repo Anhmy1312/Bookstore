@@ -37,7 +37,7 @@ class QuyDinh(db.Model):
     gia_tri = Column(Integer, nullable=False)
     mo_ta = Column(String(255))
 
-    @staticmethod
+    @staticmethod 
     def lay_gia_tri(ten):
         """Đọc một quy định, ví dụ QuyDinh.lay_gia_tri('nhap_toi_thieu') -> 150."""
         quy_dinh = db.session.get(QuyDinh, ten)

@@ -1,0 +1,75 @@
+BEGIN (implicit)
+SELECT nguoi_dung.id, nguoi_dung.ten_dang_nhap, nguoi_dung.mat_khau_hash, nguoi_dung.ho_ten, nguoi_dung.vai_tro 
+FROM nguoi_dung 
+WHERE nguoi_dung.id = %(pk_1)s
+[generated in 0.00017s] {'pk_1': 2}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[generated in 0.00020s] {'pk_1': 'nhap_toi_thieu'}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[cached since 0.001389s ago] {'pk_1': 'nguong_ton_de_nhap'}
+SELECT sach.id AS sach_id, sach.ma_vach AS sach_ma_vach, sach.ten AS sach_ten, sach.the_loai_id AS sach_the_loai_id, sach.tac_gia AS sach_tac_gia, sach.don_gia AS sach_don_gia, sach.so_luong_ton AS sach_so_luong_ton 
+FROM sach ORDER BY sach.ten
+[generated in 0.00033s] {}
+SELECT sach.id AS sach_id, sach.ma_vach AS sach_ma_vach, sach.ten AS sach_ten, sach.the_loai_id AS sach_the_loai_id, sach.tac_gia AS sach_tac_gia, sach.don_gia AS sach_don_gia, sach.so_luong_ton AS sach_so_luong_ton 
+FROM sach 
+WHERE sach.so_luong_ton < %(so_luong_ton_1)s ORDER BY sach.id 
+ LIMIT %(param_1)s
+[generated in 0.00016s] {'so_luong_ton_1': 300, 'param_1': 1}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[cached since 0.01881s ago] {'pk_1': 'nhap_toi_thieu'}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[cached since 0.01965s ago] {'pk_1': 'nguong_ton_de_nhap'}
+INSERT INTO phieu_nhap (ngay_nhap, nguoi_quan_ly_id) VALUES (%(ngay_nhap)s, %(nguoi_quan_ly_id)s)
+[generated in 0.00012s] {'ngay_nhap': datetime.date(2026, 10, 22), 'nguoi_quan_ly_id': 2}
+UPDATE sach SET so_luong_ton=%(so_luong_ton)s WHERE sach.id = %(sach_id)s
+[generated in 0.00019s] {'so_luong_ton': 300, 'sach_id': 2}
+INSERT INTO chi_tiet_phieu_nhap (phieu_nhap_id, sach_id, so_luong) VALUES (%(phieu_nhap_id)s, %(sach_id)s, %(so_luong)s)
+[generated in 0.00017s] {'phieu_nhap_id': 2, 'sach_id': 2, 'so_luong': 150}
+COMMIT
+BEGIN (implicit)
+SELECT phieu_nhap.id, phieu_nhap.ngay_nhap, phieu_nhap.nguoi_quan_ly_id 
+FROM phieu_nhap 
+WHERE phieu_nhap.id = %(pk_1)s
+[generated in 0.00012s] {'pk_1': 2}
+SELECT nguoi_dung.id, nguoi_dung.ten_dang_nhap, nguoi_dung.mat_khau_hash, nguoi_dung.ho_ten, nguoi_dung.vai_tro 
+FROM nguoi_dung 
+WHERE nguoi_dung.id = %(pk_1)s
+[generated in 0.00011s] {'pk_1': 2}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[cached since 0.03407s ago] {'pk_1': 'nhap_toi_thieu'}
+SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta 
+FROM quy_dinh 
+WHERE quy_dinh.ten = %(pk_1)s
+[cached since 0.03464s ago] {'pk_1': 'nguong_ton_de_nhap'}
+SELECT sach.id AS sach_id, sach.ma_vach AS sach_ma_vach, sach.ten AS sach_ten, sach.the_loai_id AS sach_the_loai_id, sach.tac_gia AS sach_tac_gia, sach.don_gia AS sach_don_gia, sach.so_luong_ton AS sach_so_luong_ton 
+FROM sach ORDER BY sach.ten
+[cached since 0.03252s ago] {}
+SELECT phieu_nhap.id AS phieu_nhap_id, phieu_nhap.ngay_nhap AS phieu_nhap_ngay_nhap, phieu_nhap.nguoi_quan_ly_id AS phieu_nhap_nguoi_quan_ly_id 
+FROM phieu_nhap ORDER BY phieu_nhap.id DESC 
+ LIMIT %(param_1)s
+[generated in 0.00020s] {'param_1': 1}
+SELECT chi_tiet_phieu_nhap.phieu_nhap_id AS chi_tiet_phieu_nhap_phieu_nhap_id, chi_tiet_phieu_nhap.sach_id AS chi_tiet_phieu_nhap_sach_id, chi_tiet_phieu_nhap.so_luong AS chi_tiet_phieu_nhap_so_luong 
+FROM chi_tiet_phieu_nhap 
+WHERE chi_tiet_phieu_nhap.phieu_nhap_id = %(phieu_nhap_id_1)s
+[generated in 0.00013s] {'phieu_nhap_id_1': 2}
+SELECT chi_tiet_phieu_nhap.phieu_nhap_id, chi_tiet_phieu_nhap.sach_id, chi_tiet_phieu_nhap.so_luong 
+FROM chi_tiet_phieu_nhap 
+WHERE %(param_1)s = chi_tiet_phieu_nhap.phieu_nhap_id
+[generated in 0.00012s] {'param_1': 2}
+UPDATE sach SET so_luong_ton=%(so_luong_ton)s WHERE sach.id = %(sach_id)s
+[cached since 0.01854s ago] {'so_luong_ton': 150, 'sach_id': 2}
+DELETE FROM chi_tiet_phieu_nhap WHERE chi_tiet_phieu_nhap.phieu_nhap_id = %(phieu_nhap_id)s AND chi_tiet_phieu_nhap.sach_id = %(sach_id)s
+[generated in 0.00039s] {'phieu_nhap_id': 2, 'sach_id': 2}
+DELETE FROM phieu_nhap WHERE phieu_nhap.id = %(id)s
+[generated in 0.00013s] {'id': 2}
+COMMIT

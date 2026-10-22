@@ -16,6 +16,7 @@ Cách dùng trong blueprint:
 
 Ghi chú: file này do A tạo để hai bạn không sửa chung một file.
 """
+
 from functools import wraps
 
 from flask import flash, redirect, url_for

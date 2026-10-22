@@ -1,0 +1,197 @@
+##############################################################################
+# TIMELINE GIAO DỊCH - LẬP PHIẾU NHẬP SÁCH (quyền quản lý)
+##############################################################################
+
+Trong timeline, bốn nội dung luôn đi song song:
+  CODE  : dòng lệnh trong blueprints/kho.py mà bạn viết
+  SQL   : câu lệnh SQL THẬT do SQLAlchemy sinh ra rồi gửi sang MySQL
+  RAM   : trạng thái object Python trong bộ nhớ (session của SQLAlchemy)
+  MYSQL : trạng thái thật trong CSDL sau khi câu lệnh chạy xong
+
+==============================================================================
+BƯỚC 0: Mở trang /kho/phieu-nhap (GET)    [+0.199s]
+==============================================================================
+  CODE   : r = c.get('/kho/phieu-nhap')
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Chưa có gì
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Chỉ đọc dữ liệu để hiển thị form. Chưa có gì được ghi.
+
+==============================================================================
+BƯỚC 1: Đọc quy định 150/300 và danh sách sách    [+0.235s]
+==============================================================================
+  CODE   : QuyDinh.lay_gia_tri(...)   +   Sach.query.order_by(Sach.ten).all()
+  SQL    : BEGIN (implicit)
+  SQL    : SELECT nguoi_dung.id, nguoi_dung.ten_dang_nhap, nguoi_dung.mat_khau_hash, nguoi_dung.ho_ten, nguoi_dung.vai_tro FROM nguoi_dung WHERE nguoi_dung.id = %(pk_1)s
+  SQL    : [generated in 0.00010s] {'pk_1': 2}
+  SQL    : SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta FROM quy_dinh WHERE quy_dinh.ten = %(pk_1)s
+  SQL    : [generated in 0.00008s] {'pk_1': 'nhap_toi_thieu'}
+  SQL    : SELECT quy_dinh.ten, quy_dinh.gia_tri, quy_dinh.mo_ta FROM quy_dinh WHERE quy_dinh.ten = %(pk_1)s
+  SQL    : [cached since 0.0007782s ago] {'pk_1': 'nguong_ton_de_nhap'}
+  SQL    : SELECT sach.id AS sach_id, sach.ma_vach AS sach_ma_vach, sach.ten AS sach_ten, sach.the_loai_id AS sach_the_loai_id, sach.tac_gia AS sach_tac_gia, sach.don_gia AS sach_don_gia, sach.so_luong_ton AS sach_so_luong_ton FROM sach ORDER BY sach.ten
+  SQL    : [generated in 0.00011s] {}
+  RAM    : Các object Sach đã nạp vào RAM
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Luật 150/300 lấy từ bảng quy_dinh (không viết cứng trong code).
+
+==============================================================================
+BƯỚC 2: Người quản lý bấm 'Lưu phiếu nhập' (POST)    [+0.240s]
+==============================================================================
+  CODE   : r = c.post('/kho/phieu-nhap', data={...})
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Chưa có gì
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Request mới -> session mới -> có thể thay đổi dữ liệu.
+
+==============================================================================
+BƯỚC 3: Kiểm tra luật 150/300 cho từng dòng    [+0.242s]
+==============================================================================
+  CODE   : kiem_tra_cac_dong_nhap(...) -> (loi, dong_hop_le)
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Chọn được sách: Số đỏ (tồn 150), số lượng 150
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Nếu số lượng < 150 hoặc tồn >= 300 sẽ RETURN NGAY tại đây, không ghi gì vào DB.
+
+==============================================================================
+BƯỚC 4: Tạo đối tượng phiếu trong RAM    [+0.244s]
+==============================================================================
+  CODE   : phieu = PhieuNhap(ngay_nhap=..., nguoi_quan_ly_id=2)
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Có object PhieuNhap, id = None (chưa có id)
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Mới chỉ là biến Python, MySQL chưa biết gì.
+
+==============================================================================
+BƯỚC 5: Đưa phiếu vào hàng đợi của session    [+0.246s]
+==============================================================================
+  CODE   : db.session.add(phieu)
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Session ghi nhớ: phiếu cần được INSERT
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Session theo dõi thay đổi. Chưa có SQL nào chạy.
+
+==============================================================================
+BƯỚC 6: FLUSH - đẩy phiếu xuống MySQL để lấy id    [+0.250s]
+==============================================================================
+  CODE   : db.session.flush()
+  SQL    : INSERT INTO phieu_nhap (ngay_nhap, nguoi_quan_ly_id) VALUES (%(ngay_nhap)s, %(nguoi_quan_ly_id)s)
+  SQL    : [generated in 0.00007s] {'ngay_nhap': datetime.date(2026, 10, 22), 'nguoi_quan_ly_id': 2}
+  RAM    : phieu.id = 9 (MySQL vừa tự sinh)
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : QUAN TRỌNG: flush = INSERT thật nhưng CHƯA commit. Hủy phiếu vẫn rollback được.
+
+==============================================================================
+BƯỚC 7: Thêm từng dòng chi tiết phiếu nhập    [+0.252s]
+==============================================================================
+  CODE   : db.session.add(ChiTietPhieuNhap(phieu_nhap_id=phieu.id, sach_id=..., so_luong=150))
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Session cho biết: cần INSERT 1 dòng chi_tiet
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Chi nằm trong RAM, chưa INSERT - vì còn phải thêm dòng nữa.
+
+==============================================================================
+BƯỚC 8: Cộng tồn kho của sách    [+0.254s]
+==============================================================================
+  CODE   : sach.so_luong_ton += 150
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Session ghi nhớ: UPDATE sach so_luong_ton 150 -> 300
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Giá trị mới chỉ nằm trong RAM, chưa UPDATE trong MySQL.
+
+==============================================================================
+BƯỚC 9: COMMIT - ghi tất cả xuống MySQL    [+0.262s]
+==============================================================================
+  CODE   : db.session.commit()
+  SQL    : UPDATE sach SET so_luong_ton=%(so_luong_ton)s WHERE sach.id = %(sach_id)s
+  SQL    : [generated in 0.00010s] {'so_luong_ton': 300, 'sach_id': 2}
+  SQL    : INSERT INTO chi_tiet_phieu_nhap (phieu_nhap_id, sach_id, so_luong) VALUES (%(phieu_nhap_id)s, %(sach_id)s, %(so_luong)s)
+  SQL    : [generated in 0.00008s] {'phieu_nhap_id': 9, 'sach_id': 2, 'so_luong': 150}
+  SQL    : COMMIT
+  RAM    : Session rỗng, hết việc
+  MYSQL  : phieu_nhap=1 dòng, chi_tiet_phieu_nhap=1 dòng
+  Ý NGHĨA : MySQL nhận 1 lần: INSERT phieu_nhap + INSERT chi_tiet_phieu_nhap + UPDATE sach, TRONG MỘT TRANSACTION (all-or-nothing).
+
+==============================================================================
+BƯỚC 10: Kiểm tra kết quả thật trong MySQL    [+0.265s]
+==============================================================================
+  CODE   : SELECT * FROM phieu_nhap / chi_tiet_phieu_nhap / sach
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Không còn thay đổi nào
+  MYSQL  : phieu_nhap=1 dòng, tồn sách = 300 (trước 150)
+  Ý NGHĨA : Dữ liệu đã nằm thật trong CSDL, không phải chỉ trong RAM.
+
+##############################################################################
+# KỊCH BẢN 2: CÓ LỖI RÀNG BUỘC -> ROLLBACK -> MYSQL KHÔNG ĐỔI GÌ
+##############################################################################
+
+==============================================================================
+BƯỚC 11: Thêm 1 dòng chi tiết sai (sách_id không tồn tại)    [+0.267s]
+==============================================================================
+  CODE   : db.session.add(ChiTietPhieuNhap(..., sach_id=99999, ...))
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Session cho biết: cần INSERT 1 dòng chi_tiet sai
+  MYSQL  : phieu_nhap=1 dòng, chi_tiet_phieu_nhap=1 dòng
+  Ý NGHĨA : Chưa INSERT - MySQL chưa biết gì.
+
+==============================================================================
+BƯỚC 12: COMMIT - MySQL từ chối, phát sinh IntegrityError    [+0.271s]
+==============================================================================
+  CODE   : db.session.commit()   ->   except IntegrityError:
+  SQL    : INSERT INTO chi_tiet_phieu_nhap (phieu_nhap_id, sach_id, so_luong) VALUES (%(phieu_nhap_id)s, %(sach_id)s, %(so_luong)s)
+  SQL    : [cached since 0.01163s ago] {'phieu_nhap_id': 9, 'sach_id': 99999, 'so_luong': 150}
+  SQL    : ROLLBACK
+  RAM    : Session rỗng, mọi thay đổi bị hủy. Lỗi: IntegrityError
+  MYSQL  : phieu_nhap=1 dòng, chi_tiet_phieu_nhap=1 dòng
+  Ý NGHĨA : COMMIT thất bại: INSERT phiếu + INSERT chi tiết + UPDATE tồn đều KHÔNG được ghi.
+
+==============================================================================
+BƯỚC 13: ROLLBACK - hủy toàn bộ phần đã làm trong transaction    [+0.273s]
+==============================================================================
+  CODE   : db.session.rollback()
+  SQL    : (chưa có câu lệnh nào được gửi xuống MySQL)
+  RAM    : Session quay về trạng thái trước khi bắt đầu
+  MYSQL  : phieu_nhap=1 dòng, chi_tiet_phieu_nhap=1 dòng
+  Ý NGHĨA : Không còn 'phiếu mao' hay 'tồn kho cộng nhầm'. Đây là lý do phải dùng transaction.
+
+##############################################################################
+# DỌN DỮ LIỆU THỬ NGHIỆM - ĐƯA CSDL VỀ ĐÚNG TRẠNG THÁI MẪU
+##############################################################################
+
+==============================================================================
+BƯỚC 14: Xoá chi tiết -> xoá phiếu -> trả tồn kho -> commit    [+0.291s]
+==============================================================================
+  CODE   : xoa chi_tiet truoc, xoa phieu sau (vi khoa ngoai), tra ton kho
+  SQL    : BEGIN (implicit)
+  SQL    : SELECT phieu_nhap.id AS phieu_nhap_id, phieu_nhap.ngay_nhap AS phieu_nhap_ngay_nhap, phieu_nhap.nguoi_quan_ly_id AS phieu_nhap_nguoi_quan_ly_id FROM phieu_nhap
+  SQL    : [generated in 0.00006s] {}
+  SQL    : SELECT chi_tiet_phieu_nhap.phieu_nhap_id AS chi_tiet_phieu_nhap_phieu_nhap_id, chi_tiet_phieu_nhap.sach_id AS chi_tiet_phieu_nhap_sach_id, chi_tiet_phieu_nhap.so_luong AS chi_tiet_phieu_nhap_so_luong FROM chi_tiet_phieu_nhap WHERE chi_tiet_phieu_nhap.phieu_nhap_id = %(phieu_nhap_id_1)s
+  SQL    : [generated in 0.00007s] {'phieu_nhap_id_1': 9}
+  SQL    : SELECT sach.id, sach.ma_vach, sach.ten, sach.the_loai_id, sach.tac_gia, sach.don_gia, sach.so_luong_ton FROM sach WHERE sach.id = %(pk_1)s
+  SQL    : [generated in 0.00006s] {'pk_1': 2}
+  SQL    : UPDATE sach SET so_luong_ton=%(so_luong_ton)s WHERE sach.id = %(sach_id)s
+  SQL    : [cached since 0.02157s ago] {'so_luong_ton': 150, 'sach_id': 2}
+  SQL    : COMMIT
+  SQL    : BEGIN (implicit)
+  SQL    : DELETE FROM chi_tiet_phieu_nhap
+  SQL    : [generated in 0.00006s] {}
+  SQL    : DELETE FROM phieu_nhap
+  SQL    : [generated in 0.00006s] {}
+  SQL    : DELETE FROM chi_tiet_don_hang
+  SQL    : [generated in 0.00006s] {}
+  SQL    : DELETE FROM don_hang
+  SQL    : [generated in 0.00008s] {}
+  SQL    : COMMIT
+  RAM    : Session rỗng
+  MYSQL  : phieu_nhap=0 dòng, chi_tiet_phieu_nhap=0 dòng
+  Ý NGHĨA : Thứ tự xoá: con trước, cha sau - nếu xoá cha trước MySQL sẽ chặn (lỗi 1451).
+
+==============================================================================
+KẾT THÚC - CSDL hiện tại:
+==============================================================================
+  nguoi_dung             = 5 dòng
+  quy_dinh               = 3 dòng
+  sach                   = 20 dòng
+  phieu_nhap             = 0 dòng
+  chi_tiet_phieu_nhap    = 0 dòng
+  don_hang               = 0 dòng
+  tồn sách id=2      = 150 (trước khi thử: 150)

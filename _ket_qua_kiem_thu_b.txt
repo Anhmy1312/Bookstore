@@ -3,22 +3,22 @@
    Dang ky trung ten -> bao loi: True
    Dang nhap tai khoan moi -> 200 | co menu KHACH: True
 2. GET /dat-sach/ -> 200 | so dong sach: 19
-   Sach thu: M?t bi?c id 1 ton 320
+   Sach thu: Mắt biếc id 1 ton 320
    Them vao gio -> True
    GET gio hang -> 200 | co sach trong gio: True
    Them vuot ton -> bao loi: True
    Cap nhat SL -> gio hang: {'1': 3}
-3. Dat hang TRUC_TIEP -> True | trang thai: CHO_LAY | han lay sach: 2026-10-23 11:39:17 | khoang cach (gio): 48.0 | ton moi: 317 (truoc 320 )
+3. Dat hang TRUC_TIEP -> True | trang thai: CHO_LAY | han lay sach: 2026-10-24 14:51:02 | khoang cach (gio): 48.0 | ton moi: 317 (truoc 320 )
 4. Dat hang thanh toan ONLINE -> True | trang thai: HOAN_TAT | han lay sach: None
 5. Quet ma vach -> 200 | co loi: False
    Lap hoa don quay -> True | kenh: QUAY | trang thai: HOAN_TAT | khach_id: None | nhan_vien_id: 3 | don gia chot: 95000 | ton moi: 315 (truoc 316 )
-6. Danh sach don cho lay -> 200 | co don #9: True
+6. Danh sach don cho lay -> 200 | co don #2: True
    Xac nhan lay sach -> trang thai: HOAN_TAT | nhan_vien_id: 3
 7. Tu huy don qua han -> True | trang thai: DA_HUY | ton moi: 316 (truoc 315 -> phai lon hon)
-8. Khach tu huy don #12 -> trang thai: DA_HUY | ton: 315 -> 316 (phai lon hon)
+8. Khach tu huy don #5 -> trang thai: DA_HUY | ton: 315 -> 316 (phai lon hon)
 9. Khach khac mo don cua nguoi khac -> 302 /dat-sach/don-hang
 10. KHACH vao /kho/sach -> 302 /
     NHANVIEN vao /ban-hang/ -> 200
     KHACH vao /ban-hang/ -> 302 /
 11. Phoi hoi du lieu mau -> {'nguoi_dung': 5, 'quy_dinh': 3, 'sach': 20, 'phieu_nhap': 0, 'chi_tiet_phieu_nhap': 0, 'don_hang': 0, 'chi_tiet_don_hang': 0}
-    Ton kho: {'M?t bi?c': 320, 'S? ??': 150, 'T?t ??n': 280, 'Truy?n Ki?u': 300, 'D? M?n phi?u l?u k?': 450, 'Ho?ng t? b?': 90, 'K?nh v?n hoa': 40, 'T?i th?y hoa v?ng tr?n c? xanh': 299, 'Cha gi?u cha ngh?o': 500, 'Nh? ??u t? th?ng minh': 120, 'T? t?t ??n v? ??i': 60, 'Kh?i nghi?p tinh g?n': 210, '??c nh?n t?m': 380, '7 th?i quen c?a ng??i th?nh ??t': 25, 'Atomic Habits - Th?i quen nguy?n t?': 175, 'Ngh? gi?u v? l?m gi?u': 340, 'L??c s? th?i gian': 70, 'V? tr? trong v? h?t d?': 15, 'Sapiens: L??c s? lo?i ng??i': 260, 'V? tr? (Cosmos)': 0}
+    Ton kho: {'Mắt biếc': 320, 'Số đỏ': 150, 'Tắt đèn': 280, 'Truyện Kiều': 300, 'Dế Mèn phiêu lưu ký': 450, 'Hoàng tử bé': 90, 'Kính vạn hoa': 40, 'Tôi thấy hoa vàng trên cỏ xanh': 299, 'Cha giàu cha nghèo': 499, 'Nhà đầu tư thông minh': 120, 'Từ tốt đến vĩ đại': 60, 'Khởi nghiệp tinh gọn': 210, 'Đắc nhân tâm': 380, '7 thói quen của người thành đạt': 25, 'Atomic Habits - Thói quen nguyên tử': 175, 'Nghĩ giàu và làm giàu': 340, 'Lược sử thời gian': 70, 'Vũ trụ trong vỏ hạt dẻ': 15, 'Sapiens: Lược sử loài người': 260, 'Vũ trụ (Cosmos)': 0}

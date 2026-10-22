@@ -77,15 +77,15 @@ def phuc_hoi_cSDL(anh_chup):
     """Đưa bảng sach + phiếu nhập + quy định về đúng trạng thái ban đầu."""
     with app.app_context():
         # Bước 1: xoá hết chi tiết phiếu nhập / đơn hàng rồi mới xoá phiếu/đơn
-        for ct in ChiTietPhieuNhap.query.all():
-            db.session.delete(ct)
-        for ct in ChiTietDonHang.query.all():
-            db.session.delete(ct)
+        # Dùng bulk delete (db.session.execute(db.delete(...))) chứ không dùng
+        # db.session.delete() cho bảng cha: ORM sẽ cố "xoá trắng" khoá ngoại ở bảng con
+        # (chi_tiet_*.don_hang_id / phieu_nhap_id là khoá chính) -> AssertionError,
+        # làm hàm dọn dừng giữa chừng và để lại dữ liệu sót.
+        db.session.execute(db.delete(ChiTietPhieuNhap))
+        db.session.execute(db.delete(ChiTietDonHang))
         db.session.commit()
-        for phieu in PhieuNhap.query.all():
-            db.session.delete(phieu)
-        for don in DonHang.query.all():
-            db.session.delete(don)
+        db.session.execute(db.delete(PhieuNhap))
+        db.session.execute(db.delete(DonHang))
         db.session.commit()
         # Bước 2: đưa bảng sach về đúng trạng thái ban đầu
         hien_tai = {s.id: s for s in Sach.query.all()}
