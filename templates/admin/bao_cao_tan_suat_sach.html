@@ -20,7 +20,11 @@
     {% if stats %}
     <div class="card mb-4">
       <div class="card-body">
-        <canvas id="tanSuatChart" style="max-height: 350px"></canvas>
+        <canvas id="tanSuatChart"
+                style="max-height: 350px"
+                data-labels='{{ chart_labels | tojson }}'
+                data-values='{{ chart_values | tojson }}'
+                data-title="Tan suat ban sach theo thang {{ thang }}/{{ nam }}"></canvas>
       </div>
     </div>
 
@@ -61,10 +65,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const labels = {{ chart_labels | tojson }};
-  const values = {{ chart_values | tojson }};
-  const ctx = document.getElementById('tanSuatChart').getContext('2d');
-  new Chart(ctx, {
+  // Đọc dữ liệu từ thuộc tính data-* của canvas (tránh Jinja trong <script>)
+  const canvas = document.getElementById('tanSuatChart');
+  const labels = JSON.parse(canvas.dataset.labels);
+  const values = JSON.parse(canvas.dataset.values);
+  const title  = canvas.dataset.title;
+
+  new Chart(canvas.getContext('2d'), {
     type: 'bar',
     data: {
       labels: labels,
@@ -80,10 +87,7 @@
       responsive: true,
       plugins: {
         legend: { display: false },
-        title: {
-          display: true,
-          text: 'Tan suat ban sach theo thang {{ thang }}/{{ nam }}'
-        }
+        title: { display: true, text: title }
       },
       scales: {
         y: {
