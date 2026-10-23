@@ -48,6 +48,43 @@ Tên bảng/cột trong bảng này phải khớp với `schema.sql`, `models.py
 | Giá trị sai (không phải số / âm) | Báo lỗi, không lưu | Không ghi |
 | Sau khi sửa | Mọi chức năng khác đọc giá trị mới ngay vì đọc từ bảng `quy_dinh` (không viết cứng trong code) | Đọc: `quy_dinh` |
 
+## Màn 5 – Trang tổng quan báo cáo (`/admin/bao-cao`)
+
+| Sự kiện | Xử lý | Dữ liệu đọc/ghi |
+| --- | --- | --- |
+| Mở trang (người quản trị) | `admin.thong_ke()`: mặc định tháng hiện tại; đếm tổng đơn `HOAN_TAT`, tổng số lượng bán, tổng doanh thu (`don_gia × so_luong`) trong tháng | Đọc: `don_hang`, `chi_tiet_don_hang` |
+| Chọn tháng khác, bấm "Xem thống kê" | Nhận tham số `thang=YYYY-MM` qua query string, tính lại 3 con số tổng quan | Đọc: `don_hang`, `chi_tiet_don_hang` |
+| Bấm "Báo cáo doanh thu theo thể loại" | Chuyển sang `/admin/bao-cao/doanh-thu-the-loai?thang=...` | Không ghi |
+| Bấm "Báo cáo tần suất bán sách" | Chuyển sang `/admin/bao-cao/tan-suat-sach?thang=...` | Không ghi |
+| Người không phải QUANTRI mở trang | Decorator `@vai_tro_required("QUANTRI")` chặn, chuyển về `/` | Không đọc |
+
+## Màn 6 – Báo cáo doanh thu theo thể loại (`/admin/bao-cao/doanh-thu-the-loai`)
+
+| Sự kiện | Xử lý | Dữ liệu đọc/ghi |
+| --- | --- | --- |
+| Mở trang | `admin.thong_ke_doanh_thu_the_loai()`: JOIN 4 bảng `chi_tiet_don_hang → don_hang → sach → the_loai`, lọc `trang_thai='HOAN_TAT'` + tháng của `ngay_tao`, GROUP BY thể loại | Đọc: `chi_tiet_don_hang`, `don_hang`, `sach`, `the_loai` |
+| Hiển thị bảng | Mỗi dòng: thể loại, số đơn (`COUNT DISTINCT don_hang.id`), số lượng bán (`SUM so_luong`), doanh thu (`SUM so_luong × don_gia`), tỷ lệ % (doanh_thu thể loại / tổng doanh thu × 100) | Không ghi |
+| Hiển thị biểu đồ | Chart.js vẽ biểu đồ cột từ `chart_labels` (tên thể loại) và `chart_values` (doanh thu), đã tính sẵn trong Python rồi truyền template (tránh lỗi `map` generator trong Jinja2) | Không ghi |
+| Tháng không có đơn HOAN_TAT | Hiện thông báo "Không có dữ liệu doanh thu trong tháng ..." | Không ghi |
+
+## Màn 7 – Báo cáo tần suất bán sách (`/admin/bao-cao/tan-suat-sach`)
+
+| Sự kiện | Xử lý | Dữ liệu đọc/ghi |
+| --- | --- | --- |
+| Mở trang | `admin.thong_ke_tan_suat_sach()`: JOIN 4 bảng, lọc `HOAN_TAT` + tháng, GROUP BY sách, ORDER BY số lượng bán giảm dần | Đọc: `chi_tiet_don_hang`, `don_hang`, `sach`, `the_loai` |
+| Hiển thị bảng | Mỗi dòng: tên sách, thể loại, số lượng bán, tỷ lệ % (so_luong_ban / tổng số lượng × 100) | Không ghi |
+| Hiển thị biểu đồ | Chart.js biểu đồ cột top sách bán chạy, dữ liệu truyền từ Python qua `chart_labels`/`chart_values` | Không ghi |
+| Tháng không có đơn HOAN_TAT | Hiện thông báo "Không có dữ liệu bán sách trong tháng ..." | Không ghi |
+
+---
+
+## Quy tắc chung của báo cáo (YC4) — ghi nhớ khi sửa code
+
+1. Chỉ tính đơn `don_hang.trang_thai = 'HOAN_TAT'` (không tính `CHO_LAY`, `DA_HUY`).
+2. Doanh thu = `SUM(chi_tiet_don_hang.so_luong × chi_tiet_don_hang.don_gia)` — dùng `don_gia` đã chốt lúc bán, **không** lấy lại `sach.don_gia` (giá có thể đã đổi sau đó).
+3. Lọc theo tháng của `don_hang.ngay_tao` bằng `extract("year"/"month", ...)`.
+4. Số `Decimal` do MySQL trả về phải `float(...)` trước khi chia tính tỷ lệ (lỗi đã gặp: `Decimal / float` gây `TypeError`).
+
 ---
 
 ## Gợi ý vẽ mockup bằng Mockflow (đề yêu cầu, không chụp màn hình web thật)

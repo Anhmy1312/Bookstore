@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Thong ke bao cao{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <h1 class="h4 mb-3">Thong ke bao cao</h1>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Chon thang de xem bao cao</h5>
+        <form method="get" class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Thang</label>
+            <input
+              type="month"
+              class="form-control"
+              name="thang"
+              value="{{ nam }}-{{ '%02d' % thang }}"
+            />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label"> </label>
+            <button class="btn btn-primary" type="submit">Xem thong ke</button>
+          </div>
+          <div class="col-md-4">
+            <a href="{{ url_for('admin.quy_dinh') }}" class="btn btn-outline-secondary"
+              >Quy dinh he thong</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <h5 class="mt-4">Tong quan thang {{ thang }}/{{ nam }}</h5>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="card text-bg-primary">
+          <div class="card-body">
+            <h5 class="card-title">Tong doanh thu</h5>
+            <p class="display-6">{{ "{:,.0f}".format(tong_doanh_thu) }} VND</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-bg-success">
+          <div class="card-body">
+            <h5 class="card-title">Tong don hang</h5>
+            <p class="display-6">{{ tong_don }} don</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-bg-info">
+          <div class="card-body">
+            <h5 class="card-title">Tong so luong ban</h5>
+            <p class="display-6">{{ tong_so_luong }} cuon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      {% set thang_str = nam ~ "-" ~ (thang if thang > 9 else "0" ~ thang) %}
+      <a
+        class="btn btn-primary me-2"
+        href="{{ url_for('admin.thong_ke_doanh_thu_the_loai', thang=thang_str) }}"
+        >Bao cao doanh thu theo the loai</a
+      >
+      <a
+        class="btn btn-secondary"
+        href="{{ url_for('admin.thong_ke_tan_suat_sach', thang=thang_str) }}"
+        >Bao cao tan suat ban sach</a
+      >
+    </div>
+  </div>
+</div>
+{% endblock %}

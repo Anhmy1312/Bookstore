@@ -8,17 +8,17 @@
    GET gio hang -> 200 | co sach trong gio: True
    Them vuot ton -> bao loi: True
    Cap nhat SL -> gio hang: {'1': 3}
-3. Dat hang TRUC_TIEP -> True | trang thai: CHO_LAY | han lay sach: 2026-10-24 14:51:02 | khoang cach (gio): 48.0 | ton moi: 317 (truoc 320 )
+3. Dat hang TRUC_TIEP -> True | trang thai: CHO_LAY | han lay sach: 2026-10-25 18:25:01 | khoang cach (gio): 48.0 | ton moi: 317 (truoc 320 )
 4. Dat hang thanh toan ONLINE -> True | trang thai: HOAN_TAT | han lay sach: None
 5. Quet ma vach -> 200 | co loi: False
    Lap hoa don quay -> True | kenh: QUAY | trang thai: HOAN_TAT | khach_id: None | nhan_vien_id: 3 | don gia chot: 95000 | ton moi: 315 (truoc 316 )
-6. Danh sach don cho lay -> 200 | co don #2: True
+6. Danh sach don cho lay -> 200 | co don #8: True
    Xac nhan lay sach -> trang thai: HOAN_TAT | nhan_vien_id: 3
 7. Tu huy don qua han -> True | trang thai: DA_HUY | ton moi: 316 (truoc 315 -> phai lon hon)
-8. Khach tu huy don #5 -> trang thai: DA_HUY | ton: 315 -> 316 (phai lon hon)
+8. Khach tu huy don #11 -> trang thai: DA_HUY | ton: 315 -> 316 (phai lon hon)
 9. Khach khac mo don cua nguoi khac -> 302 /dat-sach/don-hang
 10. KHACH vao /kho/sach -> 302 /
     NHANVIEN vao /ban-hang/ -> 200
     KHACH vao /ban-hang/ -> 302 /
 11. Phoi hoi du lieu mau -> {'nguoi_dung': 5, 'quy_dinh': 3, 'sach': 20, 'phieu_nhap': 0, 'chi_tiet_phieu_nhap': 0, 'don_hang': 0, 'chi_tiet_don_hang': 0}
-    Ton kho: {'Mắt biếc': 320, 'Số đỏ': 150, 'Tắt đèn': 280, 'Truyện Kiều': 300, 'Dế Mèn phiêu lưu ký': 450, 'Hoàng tử bé': 90, 'Kính vạn hoa': 40, 'Tôi thấy hoa vàng trên cỏ xanh': 299, 'Cha giàu cha nghèo': 499, 'Nhà đầu tư thông minh': 120, 'Từ tốt đến vĩ đại': 60, 'Khởi nghiệp tinh gọn': 210, 'Đắc nhân tâm': 380, '7 thói quen của người thành đạt': 25, 'Atomic Habits - Thói quen nguyên tử': 175, 'Nghĩ giàu và làm giàu': 340, 'Lược sử thời gian': 70, 'Vũ trụ trong vỏ hạt dẻ': 15, 'Sapiens: Lược sử loài người': 260, 'Vũ trụ (Cosmos)': 0}
+    Ton kho: {'Mắt biếc': 320, 'Số đỏ': 150, 'Tắt đèn': 280, 'Truyện Kiều': 300, 'Dế Mèn phiêu lưu ký': 450, 'Hoàng tử bé': 90, 'Kính vạn hoa': 40, 'Tôi thấy hoa vàng trên cỏ xanh': 299, 'Cha giàu cha nghèo': 500, 'Nhà đầu tư thông minh': 120, 'Từ tốt đến vĩ đại': 60, 'Khởi nghiệp tinh gọn': 210, 'Đắc nhân tâm': 380, '7 thói quen của người thành đạt': 25, 'Atomic Habits - Thói quen nguyên tử': 175, 'Nghĩ giàu và làm giàu': 340, 'Lược sử thời gian': 70, 'Vũ trụ trong vỏ hạt dẻ': 15, 'Sapiens: Lược sử loài người': 260, 'Vũ trụ (Cosmos)': 0}

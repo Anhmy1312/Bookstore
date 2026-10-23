@@ -1,0 +1,8 @@
+0. Ban dau: {'nguoi_dung': 5, 'quy_dinh': 3, 'the_loai': 5, 'sach': 20, 'phieu_nhap': 0, 'chi_tiet_phieu_nhap': 0, 'don_hang': 0, 'chi_tiet_don_hang': 0}
+1. Dang nhap quantri: 200 | co menu Bao cao: False
+2. GET /admin/bao-cao: 200 | co tong doanh thu: True
+3. GET /admin/bao-cao/doanh-thu-the-loai: 200 | co bang: False
+4. GET /admin/bao-cao/tan-suat-sach: 200 | co bang: False
+5. KHACH vao /admin/bao-cao (phai bi chan): 302 /
+
+Sau khi phuc hoi: {'nguoi_dung': 5, 'quy_dinh': 3, 'the_loai': 5, 'sach': 20, 'phieu_nhap': 0, 'chi_tiet_phieu_nhap': 0, 'don_hang': 0, 'chi_tiet_don_hang': 0}
