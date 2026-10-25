@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="900" height="560" fill="#f8f9fa" stroke="#dee2e6"/>
+
+  <!-- Navbar -->
+  <rect width="900" height="48" fill="#212529"/>
+  <text x="20" y="30" fill="#fff" font-size="15" font-weight="bold">📚 Nhà sách</text>
+  <text x="480" y="30" fill="#fff" font-size="13">Quản lý sách</text>
+  <text x="580" y="30" fill="#fff" font-size="13">Phiếu nhập</text>
+  <text x="670" y="30" fill="#adb5bd" font-size="13">Tài khoản</text>
+  <text x="760" y="30" fill="#adb5bd" font-size="13">Đăng xuất</text>
+
+  <!-- Tiêu đề -->
+  <text x="30" y="88" font-size="20" font-weight="bold" fill="#212529">Quản lý sách</text>
+
+  <!-- Ô tìm kiếm -->
+  <rect x="30" y="105" width="280" height="36" rx="4" fill="#fff" stroke="#ced4da"/>
+  <text x="42" y="128" font-size="13" fill="#adb5bd">Tên sách, mã vạch hoặc tác giả</text>
+
+  <!-- Dropdown thể loại -->
+  <rect x="322" y="105" width="200" height="36" rx="4" fill="#fff" stroke="#ced4da"/>
+  <text x="334" y="128" font-size="13" fill="#6c757d">-- Tất cả thể loại --</text>
+  <polygon points="504,118 512,118 508,126" fill="#6c757d"/>
+
+  <!-- Nút Tìm kiếm -->
+  <rect x="534" y="105" width="90" height="36" rx="4" fill="#fff" stroke="#0d6efd"/>
+  <text x="579" y="128" text-anchor="middle" font-size="13" fill="#0d6efd">Tìm kiếm</text>
+
+  <!-- Nút + Thêm sách -->
+  <rect x="636" y="105" width="110" height="36" rx="4" fill="#198754"/>
+  <text x="691" y="128" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">+ Thêm sách</text>
+
+  <!-- Bảng -->
+  <rect x="30" y="158" width="840" height="280" fill="#fff" stroke="#dee2e6"/>
+
+  <!-- Header bảng -->
+  <rect x="30" y="158" width="840" height="38" fill="#e9ecef"/>
+  <text x="48" y="182" font-size="12" font-weight="bold" fill="#212529">STT</text>
+  <text x="90" y="182" font-size="12" font-weight="bold" fill="#212529">Mã vạch</text>
+  <text x="200" y="182" font-size="12" font-weight="bold" fill="#212529">Tên sách</text>
+  <text x="380" y="182" font-size="12" font-weight="bold" fill="#212529">Thể loại</text>
+  <text x="470" y="182" font-size="12" font-weight="bold" fill="#212529">Tác giả</text>
+  <text x="590" y="182" font-size="12" font-weight="bold" fill="#212529" text-anchor="end">Đơn giá</text>
+  <text x="690" y="182" font-size="12" font-weight="bold" fill="#212529" text-anchor="end">Tồn kho</text>
+  <text x="740" y="182" font-size="12" font-weight="bold" fill="#212529">Thao tác</text>
+
+  <!-- Dòng dữ liệu mẫu -->
+  <line x1="30" y1="196" x2="870" y2="196" stroke="#dee2e6"/>
+  <text x="48" y="220" font-size="12" fill="#495057">1</text>
+  <text x="90" y="220" font-size="11" fill="#495057" font-family="monospace">8935086861234</text>
+  <text x="200" y="220" font-size="12" fill="#495057">Mắt biếc</text>
+  <text x="380" y="220" font-size="12" fill="#495057">Tiểu thuyết</text>
+  <text x="470" y="220" font-size="12" fill="#495057">Nguyễn Nhật Ánh</text>
+  <text x="590" y="220" font-size="12" fill="#495057" text-anchor="end">95.000 ₫</text>
+  <text x="690" y="220" font-size="12" fill="#495057" text-anchor="end">320</text>
+  <rect x="740" y="206" width="50" height="24" rx="3" fill="#fff" stroke="#0d6efd"/>
+  <text x="765" y="222" text-anchor="middle" font-size="11" fill="#0d6efd">Sửa</text>
+  <rect x="800" y="206" width="50" height="24" rx="3" fill="#fff" stroke="#dc3545"/>
+  <text x="825" y="222" text-anchor="middle" font-size="11" fill="#dc3545">Xoá</text>
+
+  <line x1="30" y1="238" x2="870" y2="238" stroke="#f0f0f0"/>
+  <text x="48" y="262" font-size="12" fill="#495057">2</text>
+  <text x="90" y="262" font-size="11" fill="#495057" font-family="monospace">8935086862345</text>
+  <text x="200" y="262" font-size="12" fill="#495057">Số đỏ</text>
+  <text x="380" y="262" font-size="12" fill="#495057">Tiểu thuyết</text>
+  <text x="470" y="262" font-size="12" fill="#495057">Nguyễn Hồng</text>
+  <text x="590" y="262" font-size="12" fill="#495057" text-anchor="end">68.000 ₫</text>
+  <text x="690" y="262" font-size="12" fill="#495057" text-anchor="end">150</text>
+  <rect x="740" y="248" width="50" height="24" rx="3" fill="#fff" stroke="#0d6efd"/>
+  <text x="765" y="264" text-anchor="middle" font-size="11" fill="#0d6efd">Sửa</text>
+  <rect x="800" y="248" width="50" height="24" rx="3" fill="#fff" stroke="#dc3545"/>
+  <text x="825" y="264" text-anchor="middle" font-size="11" fill="#dc3545">Xoá</text>
+
+  <line x1="30" y1="280" x2="870" y2="280" stroke="#f0f0f0"/>
+  <text x="48" y="304" font-size="12" fill="#495057">3</text>
+  <text x="90" y="304" font-size="11" fill="#495057" font-family="monospace">8935086863456</text>
+  <text x="200" y="304" font-size="12" fill="#495057">Tắt đèn</text>
+  <text x="380" y="304" font-size="12" fill="#495057">Tiểu thuyết</text>
+  <text x="470" y="304" font-size="12" fill="#495057">Vũ Trọng Phụng</text>
+  <text x="590" y="304" font-size="12" fill="#495057" text-anchor="end">52.000 ₫</text>
+  <text x="690" y="304" font-size="12" fill="#495057" text-anchor="end">280</text>
+  <rect x="740" y="290" width="50" height="24" rx="3" fill="#fff" stroke="#0d6efd"/>
+  <text x="765" y="306" text-anchor="middle" font-size="11" fill="#0d6efd">Sửa</text>
+  <rect x="800" y="290" width="50" height="24" rx="3" fill="#fff" stroke="#dc3545"/>
+  <text x="825" y="306" text-anchor="middle" font-size="11" fill="#dc3545">Xoá</text>
+
+  <line x1="30" y1="322" x2="870" y2="322" stroke="#f0f0f0"/>
+  <text x="48" y="346" font-size="12" fill="#495057">4</text>
+  <text x="90" y="346" font-size="11" fill="#495057" font-family="monospace">8935086864567</text>
+  <text x="200" y="346" font-size="12" fill="#495057">Truyện Kiều</text>
+  <text x="380" y="346" font-size="12" fill="#495057">Văn học cổ</text>
+  <text x="470" y="346" font-size="12" fill="#495057">Nguyễn Du</text>
+  <text x="590" y="346" font-size="12" fill="#495057" text-anchor="end">45.000 ₫</text>
+  <text x="690" y="346" font-size="12" fill="#495057" text-anchor="end">300</text>
+  <rect x="740" y="332" width="50" height="24" rx="3" fill="#fff" stroke="#0d6efd"/>
+  <text x="765" y="348" text-anchor="middle" font-size="11" fill="#0d6efd">Sửa</text>
+  <rect x="800" y="332" width="50" height="24" rx="3" fill="#fff" stroke="#dc3545"/>
+  <text x="825" y="348" text-anchor="middle" font-size="11" fill="#dc3545">Xoá</text>
+
+  <!-- Ghi chú -->
+  <text x="30" y="470" font-size="12" fill="#6c757d">• Tồn kho = 0 → hiển thị badge đỏ "Hết hàng"</text>
+  <text x="30" y="490" font-size="12" fill="#6c757d">• Xoá sách đã có giao dịch → hiện thông báo lỗi ràng buộc FK 1451</text>
+
+  <!-- Nhãn hình -->
+  <text x="30" y="546" font-size="11" fill="#adb5bd">Hình 2.x — Màn quản lý sách / danh sách (mockup)</text>
+</svg>

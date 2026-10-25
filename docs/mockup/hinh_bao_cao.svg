@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="700" viewBox="0 0 960 700" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="960" height="700" fill="#f8f9fa" stroke="#dee2e6"/>
+
+  <!-- Navbar -->
+  <rect width="960" height="48" fill="#212529"/>
+  <text x="20" y="30" fill="#fff" font-size="15" font-weight="bold">📚 Nhà sách</text>
+  <text x="560" y="30" fill="#fff" font-size="13">Quy định</text>
+  <text x="640" y="30" fill="#fff" font-size="13">Báo cáo</text>
+  <text x="720" y="30" fill="#adb5bd" font-size="13">Tài khoản</text>
+  <text x="800" y="30" fill="#adb5bd" font-size="13">Đăng xuất</text>
+
+  <!-- Tiêu đề -->
+  <text x="30" y="88" font-size="20" font-weight="bold" fill="#212529">Thống kê báo cáo</text>
+
+  <!-- Form chọn tháng -->
+  <rect x="30" y="104" width="600" height="72" rx="8" fill="#fff" stroke="#dee2e6"/>
+  <text x="54" y="134" font-size="13" font-weight="bold" fill="#212529">Tháng</text>
+  <rect x="54" y="142" width="180" height="34" rx="4" fill="#fff" stroke="#ced4da"/>
+  <text x="66" y="164" font-size="13" fill="#495057">2026-10</text>
+
+  <rect x="246" y="142" width="130" height="34" rx="4" fill="#0d6efd"/>
+  <text x="311" y="164" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">Xem thống kê</text>
+
+  <rect x="388" y="142" width="170" height="34" rx="4" fill="#fff" stroke="#6c757d"/>
+  <text x="473" y="164" text-anchor="middle" font-size="13" fill="#6c757d">Quy định hệ thống</text>
+
+  <!-- 3 thẻ tổng quan -->
+  <text x="30" y="212" font-size="15" font-weight="bold" fill="#212529">Tổng quan tháng 10/2026</text>
+
+  <!-- Thẻ doanh thu -->
+  <rect x="30" y="226" width="280" height="90" rx="8" fill="#0d6efd"/>
+  <text x="54" y="258" font-size="14" fill="#fff">Tổng doanh thu</text>
+  <text x="54" y="296" font-size="28" fill="#fff" font-weight="bold">1,520,000 ₫</text>
+
+  <!-- Thẻ đơn hàng -->
+  <rect x="330" y="226" width="280" height="90" rx="8" fill="#198754"/>
+  <text x="354" y="258" font-size="14" fill="#fff">Tổng đơn hàng</text>
+  <text x="354" y="296" font-size="28" fill="#fff" font-weight="bold">5 đơn</text>
+
+  <!-- Thẻ số lượng -->
+  <rect x="630" y="226" width="280" height="90" rx="8" fill="#0dcaf0"/>
+  <text x="654" y="258" font-size="14" fill="#fff">Tổng số lượng bán</text>
+  <text x="654" y="296" font-size="28" fill="#fff" font-weight="bold">16 cuốn</text>
+
+  <!-- 2 nút vào báo cáo chi tiết -->
+  <rect x="30" y="340" width="300" height="44" rx="6" fill="#0d6efd"/>
+  <text x="180" y="368" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">Báo cáo doanh thu theo thể loại</text>
+
+  <rect x="350" y="340" width="300" height="44" rx="6" fill="#6c757d"/>
+  <text x="500" y="368" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">Báo cáo tần suất bán sách</text>
+
+  <!-- ===== Màn báo cáo doanh thu (nửa dưới) ===== -->
+  <line x1="30" y1="410" x2="930" y2="410" stroke="#dee2e6" stroke-dasharray="6,4"/>
+  <text x="30" y="436" font-size="14" font-weight="bold" fill="#0d6efd">↳ Báo cáo doanh thu theo thể loại (sau khi bấm nút)</text>
+
+  <!-- Alert info -->
+  <rect x="30" y="448" width="660" height="36" rx="4" fill="#cff4fc" stroke="#b6effb"/>
+  <text x="44" y="471" font-size="12" fill="#087990">Tháng: 10/2026  |  Tổng doanh thu: 1,520,000 VND</text>
+
+  <!-- Biểu đồ (khung canvas) -->
+  <rect x="30" y="496" width="660" height="120" rx="6" fill="#f8f9fa" stroke="#dee2e6"/>
+  <!-- Các cột biểu đồ -->
+  <rect x="80" y="540" width="60" height="60" fill="#2563eb" opacity="0.7"/>
+  <rect x="180" y="520" width="60" height="80" fill="#2563eb" opacity="0.7"/>
+  <rect x="280" y="556" width="60" height="44" fill="#2563eb" opacity="0.7"/>
+  <rect x="380" y="564" width="60" height="36" fill="#2563eb" opacity="0.7"/>
+  <rect x="480" y="570" width="60" height="30" fill="#2563eb" opacity="0.7"/>
+  <!-- Nhãn trục X -->
+  <text x="110" y="630" text-anchor="middle" font-size="10" fill="#6c757d">Tiểu thuyết</text>
+  <text x="210" y="630" text-anchor="middle" font-size="10" fill="#6c757d">Văn học</text>
+  <text x="310" y="630" text-anchor="middle" font-size="10" fill="#6c757d">Kinh tế</text>
+  <text x="410" y="630" text-anchor="middle" font-size="10" fill="#6c757d">Tâm lý</text>
+  <text x="510" y="630" text-anchor="middle" font-size="10" fill="#6c757d">Thiếu nhi</text>
+
+  <!-- Bảng doanh thu (bên phải) -->
+  <rect x="720" y="448" width="210" height="168" fill="#fff" stroke="#dee2e6"/>
+  <rect x="720" y="448" width="210" height="30" fill="#e9ecef"/>
+  <text x="734" y="468" font-size="11" font-weight="bold" fill="#212529">Thể loại</text>
+  <text x="860" y="468" font-size="11" font-weight="bold" fill="#212529" text-anchor="end">Doanh thu</text>
+  <line x1="720" y1="478" x2="930" y2="478" stroke="#dee2e6"/>
+
+  <text x="734" y="500" font-size="11" fill="#495057">Tiểu thuyết</text>
+  <text x="916" y="500" font-size="11" fill="#495057" text-anchor="end">620,000</text>
+  <line x1="720" y1="510" x2="930" y2="510" stroke="#f0f0f0"/>
+
+  <text x="734" y="532" font-size="11" fill="#495057">Văn học</text>
+  <text x="916" y="532" font-size="11" fill="#495057" text-anchor="end">450,000</text>
+  <line x1="720" y1="542" x2="930" y2="542" stroke="#f0f0f0"/>
+
+  <text x="734" y="564" font-size="11" fill="#495057">Kinh tế</text>
+  <text x="916" y="564" font-size="11" fill="#495057" text-anchor="end">280,000</text>
+  <line x1="720" y1="574" x2="930" y2="574" stroke="#f0f0f0"/>
+
+  <text x="734" y="596" font-size="11" fill="#495057">Tâm lý</text>
+  <text x="916" y="596" font-size="11" fill="#495057" text-anchor="end">170,000</text>
+
+  <!-- Ghi chú -->
+  <text x="30" y="664" font-size="11" fill="#6c757d">• Chỉ tính đơn HOAN_TAT  • Doanh thu = Σ(so_luong × don_gia) trong chi_tiet_don_hang  • Lọc theo tháng của ngay_tao</text>
+  <text x="30" y="684" font-size="11" fill="#6c757d">• Dữ liệu biểu đồ truyền qua data-* attribute → JSON.parse (không dùng Jinja trong thẻ &lt;script&gt;)</text>
+
+  <!-- Nhãn hình -->
+  <text x="640" y="694" font-size="11" fill="#adb5bd">Hình 2.x — Màn thống kê báo cáo (mockup)</text>
+</svg>

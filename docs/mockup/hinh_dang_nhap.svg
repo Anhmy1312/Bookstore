@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520" font-family="Segoe UI, Arial, sans-serif">
+  <!-- Khung màn hình -->
+  <rect x="0" y="0" width="800" height="520" fill="#f8f9fa" stroke="#dee2e6"/>
+
+  <!-- Navbar -->
+  <rect x="0" y="0" width="800" height="48" fill="#212529"/>
+  <text x="20" y="30" fill="#fff" font-size="15" font-weight="bold">📚 Nhà sách</text>
+  <text x="620" y="30" fill="#adb5bd" font-size="13">Đăng nhập</text>
+  <text x="700" y="30" fill="#adb5bd" font-size="13">Đăng ký</text>
+
+  <!-- Tiêu đề -->
+  <text x="400" y="100" text-anchor="middle" font-size="20" font-weight="bold" fill="#212529">Đăng nhập hệ thống</text>
+
+  <!-- Card form -->
+  <rect x="220" y="120" width="360" height="240" rx="8" fill="#fff" stroke="#dee2e6"/>
+
+  <!-- Label + input tên đăng nhập -->
+  <text x="244" y="158" font-size="13" fill="#212529">Tên đăng nhập</text>
+  <rect x="244" y="166" width="312" height="36" rx="4" fill="#fff" stroke="#ced4da"/>
+  <text x="256" y="189" font-size="13" fill="#adb5bd">Nhập tên đăng nhập...</text>
+
+  <!-- Label + input mật khẩu -->
+  <text x="244" y="230" font-size="13" fill="#212529">Mật khẩu</text>
+  <rect x="244" y="238" width="312" height="36" rx="4" fill="#fff" stroke="#ced4da"/>
+  <text x="256" y="261" font-size="13" fill="#adb5bd">••••••</text>
+
+  <!-- Nút đăng nhập -->
+  <rect x="244" y="296" width="312" height="38" rx="4" fill="#0d6efd"/>
+  <text x="400" y="321" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">Đăng nhập</text>
+
+  <!-- Ghi chú tài khoản mẫu -->
+  <text x="400" y="392" text-anchor="middle" font-size="12" fill="#6c757d">Tài khoản mẫu (mật khẩu chung 123456):</text>
+  <text x="400" y="412" text-anchor="middle" font-size="12" fill="#6c757d">quantri · quanly · nhanvien · khachhang</text>
+
+  <!-- Nhãn hình -->
+  <text x="20" y="506" font-size="11" fill="#adb5bd">Hình 2.x — Màn đăng nhập (mockup)</text>
+</svg>
