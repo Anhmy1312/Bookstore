@@ -1,9 +1,10 @@
 ﻿"""Các hàm nghiệp vụ dùng chung cho nhiều blueprint (đặt sách, bán hàng, báo cáo).
 
-Tách riêng một file để hai bạn không sửa chung một file.   Người phụ trách: B
+Tách riêng một file để hai bạn không sửa chung một file.   Người phụ trách: NamLee
 
 Hàm quan trọng nhất: `huy_don_qua_han()` - huỷ đơn trực tiếp quá hạn và trả lại tồn kho.
 """
+
 from datetime import datetime, timedelta
 
 from flask import session
@@ -12,8 +13,8 @@ from extensions import db
 from models import ChiTietDonHang, DonHang, QuyDinh, Sach
 
 # Khoá giỏ hàng trong session
-KHOA_GIO_HANG = "gio_hang"        # giỏ của khách đặt online
-KHOA_GIO_QUAY = "gio_hang_quay"   # giỏ của nhân viên tại quầy
+KHOA_GIO_HANG = "gio_hang"  # giỏ của khách đặt online
+KHOA_GIO_QUAY = "gio_hang_quay"  # giỏ của nhân viên tại quầy
 
 
 def lay_gio_hang(ten_khoa):
@@ -45,7 +46,9 @@ def chi_tiet_gio_hang(ten_khoa):
 
 def tong_tien_gio(ten_khoa):
     """Tổng tiền của giỏ (dùng giá hiện tại của sách - chỉ để hiển thị cho khách)."""
-    return sum(sach.don_gia * so_luong for sach, so_luong in chi_tiet_gio_hang(ten_khoa))
+    return sum(
+        sach.don_gia * so_luong for sach, so_luong in chi_tiet_gio_hang(ten_khoa)
+    )
 
 
 def huy_don_qua_han():
@@ -72,7 +75,7 @@ def huy_don_qua_han():
         for ct in don.chi_tiet:
             sach = db.session.get(Sach, ct.sach_id)
             if sach is not None:
-                sach.so_luong_ton += ct.so_luong     # trả lại tồn kho
+                sach.so_luong_ton += ct.so_luong  # trả lại tồn kho
         don.trang_thai = "DA_HUY"
         so_don += 1
 
@@ -133,11 +136,10 @@ def tao_don_hang(kenh, khach_id, ten_khach, nhan_vien_id, hinh_thuc_tt, chi_tiet
                 don_hang_id=don.id,
                 sach_id=sach.id,
                 so_luong=so_luong,
-                don_gia=sach.don_gia,      # CHỐT giá lúc bán
+                don_gia=sach.don_gia,  # CHỐT giá lúc bán
             )
         )
-        sach.so_luong_ton -= so_luong   # trừ tồn ngay khi đặt
+        sach.so_luong_ton -= so_luong  # trừ tồn ngay khi đặt
 
     db.session.commit()
     return don, ""
-

@@ -1,20 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Bao cao tan suat ban sach{% endblock %}
+{% block title %}Báo cáo tần suất bán sách{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-10">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1 class="h4">Bao cao tan suat ban sach</h1>
+      <h1 class="h4">Báo cáo tần suất bán sách</h1>
       <a class="btn btn-secondary" href="{{ url_for('admin.thong_ke') }}"
-        >&lt; Ve trang chua bao cao</a
+        >&lt; Về trang chủ báo cáo</a
       >
     </div>
 
     <div class="alert alert-info mb-3">
-      Thang: <strong>{{ thang }}/{{ nam }}</strong>
+      Tháng: <strong>{{ thang }}/{{ nam }}</strong>
       &nbsp;|&nbsp;
-      Tong so luong ban:
-      <strong>{{ tong_so_luong }} cuon</strong>
+      Tổng số lượng bán:
+      <strong>{{ tong_so_luong }} cuốn</strong>
     </div>
 
     {% if stats %}
@@ -24,7 +24,7 @@
                 style="max-height: 350px"
                 data-labels='{{ chart_labels | tojson }}'
                 data-values='{{ chart_values | tojson }}'
-                data-title="Tan suat ban sach theo thang {{ thang }}/{{ nam }}"></canvas>
+                data-title="Tần suất bán sách theo tháng {{ thang }}/{{ nam }}"></canvas>
       </div>
     </div>
 
@@ -32,10 +32,10 @@
       <thead class="table-light">
         <tr>
           <th>STT</th>
-          <th>Ten sach</th>
-          <th>The loai</th>
-          <th class="text-end">So luong ban</th>
-          <th class="text-end">Ty le</th>
+          <th>Tên sách</th>
+          <th>Thể loại</th>
+          <th class="text-end">Số lượng bán</th>
+          <th class="text-end">Tỷ lệ</th>
         </tr>
       </thead>
       <tbody>
@@ -49,7 +49,7 @@
         </tr>
         {% endfor %}
         <tr>
-          <td colspan="3" class="text-end fw-bold">Tong</td>
+          <td colspan="3" class="text-end fw-bold">Tổng</td>
           <td class="text-end fw-bold">{{ tong_so_luong }}</td>
           <td class="text-end fw-bold">100.0%</td>
         </tr>
@@ -57,7 +57,7 @@
     </table>
     {% else %}
     <div class="alert alert-warning">
-      Khong co du lieu ban sach trong thang {{ thang }}/{{ nam }}.
+      Không có dữ liệu bán sách trong tháng {{ thang }}/{{ nam }}.
     </div>
     {% endif %}
   </div>
@@ -76,7 +76,7 @@
     data: {
       labels: labels,
       datasets: [{
-        label: 'So luong ban',
+        label: 'Số lượng bán',
         data: values,
         backgroundColor: 'rgba(16, 185, 129, 0.6)',
         borderColor: 'rgba(16, 185, 129, 1)',

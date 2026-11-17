@@ -1,4 +1,4 @@
-"""Phân quyền theo 4 vai trò - dùng chung cho mọi blueprint.   Người phụ trách: A
+"""Phân quyền theo 4 vai trò - dùng chung cho mọi blueprint.   Người phụ trách: AnhMy
 
 Vai trò lấy từ cột `vai_tro` của bảng `nguoi_dung`:
     KHACH      - Khách hàng (đặt sách online)
@@ -39,6 +39,7 @@ def vai_tro_required(*vai_tro_duoc_phep):
 
     def boc_trong(f):
         @wraps(f)
+        # Giúp hàm nhận các đối số truyền vào mà không cần biết trước số lượng hoặc tên của chúng
         def kiem_tra(*args, **kwargs):
             if not current_user.is_authenticated:
                 return redirect(url_for("auth.dang_nhap", next=request_full_path()))

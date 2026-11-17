@@ -18,7 +18,7 @@ from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
 from extensions import db
-from models import DonHang, Sach, TheLoai
+from models import DonHang, QuyDinh, Sach, TheLoai
 from nghiem_vu import (KHOA_GIO_HANG, chi_tiet_gio_hang, huy_don_qua_han, lay_gio_hang,
                        luu_gio_hang, tao_don_hang, tong_tien_gio, xoa_gio_hang)
 from quyen import vai_tro_required
@@ -177,8 +177,12 @@ def dat_hang():
                 )
             return redirect(url_for("dat_sach.don_hang_cua_toi"))
 
-    return render_template("dat_sach/dat_hang.html", chi_tiet=chi_tiet,
-                           tong_tien=tong_tien_gio(KHOA_GIO_HANG))
+    return render_template(
+        "dat_sach/dat_hang.html",
+        chi_tiet=chi_tiet,
+        tong_tien=tong_tien_gio(KHOA_GIO_HANG),
+        so_gio_huy=QuyDinh.lay_gia_tri("gio_huy_don"),
+    )
 
 
 @bp.route("/don-hang")

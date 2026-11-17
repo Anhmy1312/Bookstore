@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Thong ke bao cao{% endblock %}
+{% block title %}Thống kê báo cáo{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-md-10">
-    <h1 class="h4 mb-3">Thong ke bao cao</h1>
+    <h1 class="h4 mb-3">Thống kê báo cáo</h1>
 
     <div class="card mb-4">
       <div class="card-body">
-        <h5 class="card-title">Chon thang de xem bao cao</h5>
+        <h5 class="card-title">Chọn tháng để xem báo cáo</h5>
         <form method="get" class="row g-3">
           <div class="col-md-4">
-            <label class="form-label">Thang</label>
+            <label class="form-label">Tháng</label>
             <input
               type="month"
               class="form-control"
@@ -19,24 +19,24 @@
             />
           </div>
           <div class="col-md-4">
-            <label class="form-label"> </label>
-            <button class="btn btn-primary" type="submit">Xem thong ke</button>
+            <label class="form-label"> </label>
+            <button class="btn btn-primary" type="submit">Xem thống kê</button>
           </div>
           <div class="col-md-4">
             <a href="{{ url_for('admin.quy_dinh') }}" class="btn btn-outline-secondary"
-              >Quy dinh he thong</a
+              >Quy định hệ thống</a
             >
           </div>
         </form>
       </div>
     </div>
 
-    <h5 class="mt-4">Tong quan thang {{ thang }}/{{ nam }}</h5>
+    <h5 class="mt-4">Tổng quan tháng {{ thang }}/{{ nam }}</h5>
     <div class="row g-3">
       <div class="col-md-4">
         <div class="card text-bg-primary">
           <div class="card-body">
-            <h5 class="card-title">Tong doanh thu</h5>
+            <h5 class="card-title">Tổng doanh thu</h5>
             <p class="display-6">{{ "{:,.0f}".format(tong_doanh_thu) }} VND</p>
           </div>
         </div>
@@ -44,16 +44,16 @@
       <div class="col-md-4">
         <div class="card text-bg-success">
           <div class="card-body">
-            <h5 class="card-title">Tong don hang</h5>
-            <p class="display-6">{{ tong_don }} don</p>
+            <h5 class="card-title">Tổng đơn hàng</h5>
+            <p class="display-6">{{ tong_don }} đơn</p>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card text-bg-info">
           <div class="card-body">
-            <h5 class="card-title">Tong so luong ban</h5>
-            <p class="display-6">{{ tong_so_luong }} cuon</p>
+            <h5 class="card-title">Tổng số lượng bán</h5>
+            <p class="display-6">{{ tong_so_luong }} cuốn</p>
           </div>
         </div>
       </div>
@@ -64,12 +64,12 @@
       <a
         class="btn btn-primary me-2"
         href="{{ url_for('admin.thong_ke_doanh_thu_the_loai', thang=thang_str) }}"
-        >Bao cao doanh thu theo the loai</a
+        >Báo cáo doanh thu theo thể loại</a
       >
       <a
         class="btn btn-secondary"
         href="{{ url_for('admin.thong_ke_tan_suat_sach', thang=thang_str) }}"
-        >Bao cao tan suat ban sach</a
+        >Báo cáo tần suất bán sách</a
       >
     </div>
   </div>

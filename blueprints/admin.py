@@ -34,7 +34,7 @@ def quy_dinh():
         for quy_dinh in quy_dinh_list:
             gia_tri = request.form.get(quy_dinh.ten, "").strip()
             if not gia_tri.isdigit():
-                loi.append(f"Gia tri cua «{quy_dinh.ten}» phai la so nguyen khong am.")
+                loi.append(f"Giá trị của «{quy_dinh.ten}» phải là số nguyên không âm.")
                 continue
             gia_tri_moi[quy_dinh.ten] = int(gia_tri)
 
@@ -45,7 +45,7 @@ def quy_dinh():
             for quy_dinh in quy_dinh_list:
                 quy_dinh.gia_tri = gia_tri_moi[quy_dinh.ten]
             db.session.commit()
-            flash("Da cap nhat quy dinh he thong.", "success")
+            flash("Đã cập nhật quy định hệ thống.", "success")
             return redirect(url_for("admin.quy_dinh"))
 
     return render_template("admin/quy_dinh.html", quy_dinh_list=quy_dinh_list)

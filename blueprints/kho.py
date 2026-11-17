@@ -1,4 +1,4 @@
-"""Nguoi quan ly (quan ly kho): lap phieu nhap (YC1) + quan ly sach (YC5).   Nguoi phu trich: A
+"""Nguoi quan ly (quan ly kho): lap phieu nhap (YC1) + quan ly sach (YC5).   Nguoi phu trich: AnhMy
 
 Tuần 2 làm:
   - /kho/sach          : danh sách, thêm, sửa, xoá, tìm kiếm sách
