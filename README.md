@@ -63,12 +63,6 @@ Phân quyền nằm ở `quyen.py` (decorator `vai_tro_required`), hàm nghiệp
 nhập, đúng vai trò mới vào được chức năng tương ứng. Menu nằm trong `templates/_menu.html`
 (file riêng để hai bạn cùng sửa mà không xung đột git).
 
-## Chạy bộ kiểm thử tự động
-
-```bash
-venv\Scripts\python.exe kiem_thu_tuan2.py          # phần A: kho + quản trị
-venv\Scripts\python.exe kiem_thu_khach_ban_hang.py  # phần B: khách + bán hàng
-```
 Hai script kiểm tra trên MySQL thật (đăng nhập 4 vai trò, chặn sai vai trò, thêm/sửa/xoá sách,
 lập phiếu nhập hợp lệ / bị từ chối, đổi quy định 150 → 100, đặt sách 2 hình thức thanh toán,
 hạn 48 giờ, tự huỷ đơn quá hạn, bán tại quầy bằng mã vạch, xác nhận lấy sách). Kết quả ghi ra
