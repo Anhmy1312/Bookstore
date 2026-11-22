@@ -1,18 +1,31 @@
 """Điểm khởi động của website quản lý nhà sách.  Chạy:  python app.py"""
+
 from flask import Flask, render_template
 from sqlalchemy.exc import SQLAlchemyError
 
 from blueprints import admin, auth, ban_hang, dat_sach, kho
 from config import Config
 from extensions import db, login
-from models import (ChiTietDonHang, ChiTietPhieuNhap, DonHang, NguoiDung,
-                    PhieuNhap, QuyDinh, Sach, TheLoai)
+from models import (
+    ChiTietDonHang,
+    ChiTietPhieuNhap,
+    DonHang,
+    NguoiDung,
+    PhieuNhap,
+    QuyDinh,
+    Sach,
+    TheLoai,
+)
 
 # Dùng cho trang /kiem-tra-db: (tên bảng, lớp model)
 CAC_BANG = [
-    ("nguoi_dung", NguoiDung), ("quy_dinh", QuyDinh), ("the_loai", TheLoai),
-    ("sach", Sach), ("phieu_nhap", PhieuNhap),
-    ("chi_tiet_phieu_nhap", ChiTietPhieuNhap), ("don_hang", DonHang),
+    ("nguoi_dung", NguoiDung),
+    ("quy_dinh", QuyDinh),
+    ("the_loai", TheLoai),
+    ("sach", Sach),
+    ("phieu_nhap", PhieuNhap),
+    ("chi_tiet_phieu_nhap", ChiTietPhieuNhap),
+    ("don_hang", DonHang),
     ("chi_tiet_don_hang", ChiTietDonHang),
 ]
 
@@ -29,12 +42,12 @@ def create_app():
 
     @login.user_loader
     def load_user(user_id):
-        """Flask-Login nạp lại người dùng từ user id lưu trong session (slide trang 85)."""
+        """Flask-Login nạp lại người dùng từ user id lưu trong session."""
         return db.session.get(NguoiDung, int(user_id))
 
     @app.template_filter("vnd")
     def dinh_dang_vnd(so):
-        """Bộ lọc riêng cho template (slide trang 27): 95000 -> '95.000 đ'"""
+        """Bộ lọc riêng cho template: 95000 -> '95.000 đ'"""
         return "{:,.0f}".format(so).replace(",", ".") + " đ"
 
     @app.route("/")
@@ -45,7 +58,6 @@ def create_app():
 
     @app.route("/kiem-tra-db")
     def kiem_tra_db():
-        """Hai bạn mở trang này trên máy mình: cùng số dòng nghĩa là cùng CSDL mẫu."""
         thong_ke = [(ten_bang, model.query.count()) for ten_bang, model in CAC_BANG]
         return render_template("kiem_tra_db.html", thong_ke=thong_ke)
 

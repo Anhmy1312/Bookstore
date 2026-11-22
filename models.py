@@ -1,4 +1,4 @@
-"""Các lớp model, khớp từng bảng trong schema.sql (viết theo slide trang 59-64).
+"""Các lớp model, khớp từng bảng trong schema.sql.
 
 - Lớp cơ sở là db.Model, tên bảng đặt bằng __tablename__.
 - Cột khai báo bằng Column; khoá ngoại bằng ForeignKey; quan hệ bằng relationship + backref.
@@ -37,7 +37,7 @@ class QuyDinh(db.Model):
     gia_tri = Column(Integer, nullable=False)
     mo_ta = Column(String(255))
 
-    @staticmethod 
+    @staticmethod
     def lay_gia_tri(ten):
         """Đọc một quy định, ví dụ QuyDinh.lay_gia_tri('nhap_toi_thieu') -> 150."""
         quy_dinh = db.session.get(QuyDinh, ten)
