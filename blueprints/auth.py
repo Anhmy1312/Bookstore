@@ -1,4 +1,4 @@
-"""Dang nhap / dang ky / dang xuat, phan quyen 4 vai tro.   Nguoi phu trich: B
+"""Dang nhap / dang ky / dang xuat, phan quyen 4 vai tro.   Nguoi phu trich: NamLe
 
 Tuần 2 làm:
   - /dang-nhap, /dang-xuat  (so mật khẩu bằng NguoiDung.kiem_tra_mat_khau)
@@ -14,6 +14,7 @@ LƯU Ý BĂM MẬT KHẨU: tài khoản mẫu trong schema.sql băm bằng pbkdf
 Tài khoản tạo mới cũng dùng đúng phương pháp đó (không dùng scrypt mặc định của
 werkzeug vì một số máy Python trên macOS không hỗ trợ).
 """
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
 from sqlalchemy.exc import IntegrityError
@@ -41,9 +42,11 @@ def dang_nhap():
         mat_khau = request.form.get("mat_khau", "")
 
         # Lưu ý: so sánh với ĐÚNG TÊN CỘT, không so biến với chính nó
-        nguoi_dung = db.session.query(NguoiDung).filter(
-            NguoiDung.ten_dang_nhap == ten_dang_nhap
-        ).first()
+        nguoi_dung = (
+            db.session.query(NguoiDung)
+            .filter(NguoiDung.ten_dang_nhap == ten_dang_nhap)
+            .first()
+        )
 
         if nguoi_dung is None or not nguoi_dung.kiem_tra_mat_khau(mat_khau):
             loi = "Tên đăng nhập hoặc mật khẩu không đúng."
@@ -118,7 +121,9 @@ def tai_khoan():
         elif mat_khau_moi != xac_nhan:
             loi = "Hai mật khẩu mới không khớp."
         else:
-            current_user.mat_khau_hash = generate_password_hash(mat_khau_moi, method=PHUONG_PHAP_BAM)
+            current_user.mat_khau_hash = generate_password_hash(
+                mat_khau_moi, method=PHUONG_PHAP_BAM
+            )
             db.session.commit()
             thanh_cong = "Đã đổi mật khẩu thành công."
 

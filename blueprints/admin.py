@@ -1,4 +1,4 @@
-"""Nguoi quan tri: thong ke bao cao (YC4) + thay doi quy dinh (YC5).   Nguoi phu trich: A
+"""Nguoi quan tri: thong ke bao cao (YC4) + thay doi quy dinh (YC5).   Nguoi phu trich: AnhMy
 
 Tuần 2: trang sua quy dinh.
 Tuần 3: 2 bao cao theo thang (bang + Chart.js). Chi tinh don trang_thai = 'HOAN_TAT'.
@@ -8,6 +8,7 @@ Bang dung: quy_dinh, don_hang, chi_tiet_don_hang, sach, the_loai
 
 GHI CHU CUA A (20/10): tuan 2 moi lam phan quy dinh. Phuan bao cao (UC07) de tuan 3.
 """
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from sqlalchemy import extract, func
 
@@ -144,7 +145,9 @@ def thong_ke_doanh_thu_the_loai():
             TheLoai.ten.label("ten_the_loai"),
             func.count(DonHang.id.distinct()).label("so_don"),
             func.sum(ChiTietDonHang.so_luong).label("so_luong_ban"),
-            func.sum(ChiTietDonHang.so_luong * ChiTietDonHang.don_gia).label("doanh_thu"),
+            func.sum(ChiTietDonHang.so_luong * ChiTietDonHang.don_gia).label(
+                "doanh_thu"
+            ),
         )
         .select_from(ChiTietDonHang)
         .join(DonHang, ChiTietDonHang.don_hang_id == DonHang.id)

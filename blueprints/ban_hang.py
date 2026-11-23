@@ -1,4 +1,4 @@
-"""Nhân viên bán tại quầy (YC3), xác nhận khách lấy sách + thu tiền đơn TRUC_TIEP (YC2).   Người phụ trách: B
+"""Nhân viên bán tại quầy (YC3), xác nhận khách lấy sách + thu tiền đơn TRUC_TIEP (YC2).   Người phụ trách: NamLe
 
 Tuần 2: bán tại quầy (nhập/quét ma_vach), lưu hoá đơn kenh = 'QUAY', trừ tồn, chốt don_gia.
 Tuần 3: xác nhận khách lấy sách + thu tiền (đơn CHO_LAY -> HOAN_TAT), danh sách đơn chờ lấy.
@@ -11,13 +11,22 @@ QUY ƯỚC:
     (khách đã thanh toán tại quầy), khach_id = NULL vì có thể là khách vãng lai.
   - don_gia lấy từ sach.don_gia tại thời điểm bán rồi CHỐT vào chi_tiet_don_hang.
 """
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user
 
 from extensions import db
 from models import DonHang, Sach
-from nghiem_vu import (KHOA_GIO_QUAY, chi_tiet_gio_hang, huy_don_qua_han, lay_gio_hang,
-                       luu_gio_hang, tao_don_hang, tong_tien_gio, xoa_gio_hang)
+from nghiem_vu import (
+    KHOA_GIO_QUAY,
+    chi_tiet_gio_hang,
+    huy_don_qua_han,
+    lay_gio_hang,
+    luu_gio_hang,
+    tao_don_hang,
+    tong_tien_gio,
+    xoa_gio_hang,
+)
 from quyen import vai_tro_required
 
 bp = Blueprint("ban_hang", __name__, url_prefix="/ban-hang")
@@ -114,9 +123,9 @@ def thanh_toan():
 
     don, loi = tao_don_hang(
         kenh="QUAY",
-        khach_id=None,                      # khách vãng lai -> khach_id NULL
+        khach_id=None,  # khách vãng lai -> khach_id NULL
         ten_khach=ten_khach,
-        nhan_vien_id=current_user.id,       # nhân viên thanh toán
+        nhan_vien_id=current_user.id,  # nhân viên thanh toán
         hinh_thuc_tt="TRUC_TIEP",
         chi_tiet=chi_tiet,
     )
@@ -149,7 +158,9 @@ def don_cho_lay():
         flash(f"{so_don_huy} đơn quá hạn đã bị huỷ tự động.", "info")
 
     don_hangs = (
-        DonHang.query.filter_by(trang_thai="CHO_LAY").order_by(DonHang.han_lay_sach).all()
+        DonHang.query.filter_by(trang_thai="CHO_LAY")
+        .order_by(DonHang.han_lay_sach)
+        .all()
     )
     return render_template("ban_hang/don_cho_lay.html", don_hangs=don_hangs)
 
@@ -164,7 +175,7 @@ def xac_nhan_lay_sach(don_hang_id):
         flash("Đơn hàng không còn ở trạng thái chờ lấy sách.", "danger")
         return redirect(url_for("ban_hang.don_cho_lay"))
 
-    don.nhan_vien_id = current_user.id   # nhân viên thu tiền
+    don.nhan_vien_id = current_user.id  # nhân viên thu tiền
     don.trang_thai = "HOAN_TAT"
     db.session.commit()
     flash(f"Đã xác nhận lấy sách và thu tiền cho đơn #{don.id}.", "success")

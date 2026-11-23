@@ -5,16 +5,6 @@ Vai trò lấy từ cột `vai_tro` của bảng `nguoi_dung`:
     NHANVIEN   - Nhân viên bán hàng (bán tại quầy)
     QUANLY     - Người quản lý kho (lập phiếu nhập, quản lý sách)
     QUANTRI    - Người quản trị (thống kê, báo cáo, thay đổi quy định)
-
-Cách dùng trong blueprint:
-    from quyen import vai_tro_required
-
-    @bp.route("/sach")
-    @vai_tro_required("QUANLY")
-    def danh_sach_sach():
-        ...
-
-Ghi chú: file này do A tạo để hai bạn không sửa chung một file.
 """
 
 from functools import wraps

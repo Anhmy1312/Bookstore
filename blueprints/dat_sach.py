@@ -1,4 +1,4 @@
-"""Khách hàng đặt sách online (YC2).   Người phụ trách: B
+"""Khách hàng đặt sách online (YC2).   Người phụ trách: NamLe
 
 Tuần 2: danh sách sách + giỏ hàng.
 Tuần 3: đặt hàng với 2 hình thức thanh toán; đơn TRUC_TIEP có han_lay_sach = ngay_tao + gio_huy_don;
@@ -13,14 +13,23 @@ QUY ĐỊNH (đã chốt, xem PROJECT_CONTEXT.md):
   - Quy định 48 giờ CHỈ áp dụng cho đơn TRUC_TIEP. Đơn thanh toán ONLINE không bao giờ tự huỷ.
   - Trừ tồn kho ngay khi đặt hàng; đơn bị huỷ thì cộng lại tồn.
 """
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user
 from sqlalchemy.exc import IntegrityError
 
 from extensions import db
 from models import DonHang, QuyDinh, Sach, TheLoai
-from nghiem_vu import (KHOA_GIO_HANG, chi_tiet_gio_hang, huy_don_qua_han, lay_gio_hang,
-                       luu_gio_hang, tao_don_hang, tong_tien_gio, xoa_gio_hang)
+from nghiem_vu import (
+    KHOA_GIO_HANG,
+    chi_tiet_gio_hang,
+    huy_don_qua_han,
+    lay_gio_hang,
+    luu_gio_hang,
+    tao_don_hang,
+    tong_tien_gio,
+    xoa_gio_hang,
+)
 from quyen import vai_tro_required
 
 bp = Blueprint("dat_sach", __name__, url_prefix="/dat-sach")
